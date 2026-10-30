@@ -9,308 +9,136 @@
 
 <style>
 :root {
-  --bg: #101114;
-  --card: #1b1d22;
-  --card2: #22252b;
-  --text: #f4f4f5;
-  --muted: #9297a2;
-  --red: #ff5252;
-  --green: #43d17d;
-  --border: #30333b;
+  --bg:#101114; --card:#1b1d22; --card2:#22252b;
+  --text:#f4f4f5; --muted:#9297a2; --red:#ff5252;
+  --green:#43d17d; --border:#30333b;
 }
-
-* { box-sizing: border-box; }
-
-html {
-  scroll-behavior: smooth;
-  background: var(--bg);
-}
-
+* {box-sizing:border-box}
+html {scroll-behavior:smooth;background:var(--bg)}
 body {
-  margin: 0;
-  padding: calc(45px + env(safe-area-inset-top)) 16px calc(100px + env(safe-area-inset-bottom));
-  background: var(--bg);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin:0;
+  padding:calc(45px + env(safe-area-inset-top)) 16px calc(100px + env(safe-area-inset-bottom));
+  background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
-
 header {
-  position: sticky;
-  top: calc(env(safe-area-inset-top) + 4px);
-  z-index: 50;
-  text-align: center;
-  padding: 7px 0 12px;
-  margin-bottom: 18px;
-  background: var(--bg);
-  transform: translateY(0);
-  opacity: 1;
-  transition: transform 0.22s ease, opacity 0.22s ease;
-  will-change: transform;
+  position:sticky;top:calc(env(safe-area-inset-top) + 4px);
+  z-index:50;text-align:center;padding:7px 0 12px;
+  margin-bottom:18px;background:var(--bg);
+  transform:translateY(0);opacity:1;
+  transition:transform .22s ease,opacity .22s ease;
 }
-
 header.header-hidden {
-  transform: translateY(-150%);
-  opacity: 0;
-  pointer-events: none;
+  transform:translateY(-150%);opacity:0;pointer-events:none;
 }
-
 .header-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+  display:flex;align-items:center;justify-content:center;gap:12px;
 }
-
-.header-emoji {
-  font-size: 24px;
-  line-height: 1;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 25px;
-  font-weight: 800;
-  letter-spacing: -0.7px;
-}
-
-.screen { display: none; }
-.screen.active { display: block; }
-
+.header-emoji {font-size:24px;line-height:1}
+header h1 {margin:0;font-size:25px;font-weight:800;letter-spacing:-.7px}
+.screen {display:none}
+.screen.active {display:block}
 .card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 20px;
-  margin-bottom: 16px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:18px;padding:20px;margin-bottom:16px;
 }
-
 .card-title {
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.7px;
-  margin-bottom: 12px;
+  color:var(--muted);font-size:13px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.7px;margin-bottom:12px;
 }
-
 .big-number {
-  font-size: 42px;
-  line-height: 1.1;
-  font-weight: 800;
-  letter-spacing: -1.5px;
-  margin: 5px 0;
-  font-variant-numeric: tabular-nums;
+  font-size:42px;line-height:1.1;font-weight:800;
+  letter-spacing:-1.5px;margin:5px 0;font-variant-numeric:tabular-nums;
 }
-
-.red { color: var(--red); }
-.green { color: var(--green); }
-.muted { color: var(--muted); }
-.small { font-size: 13px; }
-
-.debt-card {
-  text-align: center;
-  padding: 26px 20px;
-}
-
-.debt-card .big-number { font-size: 54px; }
-
+.red {color:var(--red)}
+.green {color:var(--green)}
+.muted {color:var(--muted)}
+.small {font-size:13px}
+.debt-card {text-align:center;padding:26px 20px}
+.debt-card .big-number {font-size:54px}
 .stat-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 0;
-  border-bottom: 1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;padding:13px 0;border-bottom:1px solid var(--border);
 }
-
-.stat-row:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.stat-label {
-  color: var(--muted);
-  font-size: 14px;
-}
-
+.stat-row:last-child {border-bottom:none;padding-bottom:0}
+.stat-label {color:var(--muted);font-size:14px}
 .stat-value {
-  font-size: 18px;
-  font-weight: 750;
-  font-variant-numeric: tabular-nums;
-  text-align: right;
+  font-size:18px;font-weight:750;font-variant-numeric:tabular-nums;
+  text-align:right;
 }
-
 .counter-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
 }
-
-.counter-value {
-  font-size: 32px;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-}
-
-.counter-controls {
-  display: flex;
-  gap: 10px;
-}
-
+.counter-value {font-size:32px;font-weight:800;font-variant-numeric:tabular-nums}
+.counter-controls {display:flex;gap:10px}
 button {
-  border: none;
-  border-radius: 12px;
-  padding: 12px 17px;
-  color: white;
-  background: var(--card2);
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  border:none;border-radius:12px;padding:12px 17px;color:white;
+  background:var(--card2);font-size:15px;font-weight:700;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;
 }
-
-button:active { transform: scale(0.97); }
-
-button.primary {
-  background: var(--green);
-  color: #07140c;
-}
-
-button.danger {
-  background: #4a2226;
-  color: #ff7777;
-}
-
-button.secondary {
-  background: #30343d;
-  color: var(--text);
-}
-
-button.counter-button {
-  width: 46px;
-  height: 46px;
-  padding: 0;
-  font-size: 24px;
-}
-
+button:active {transform:scale(.97)}
+button.primary {background:var(--green);color:#07140c}
+button.danger {background:#4a2226;color:#ff7777}
+button.secondary {background:#30343d;color:var(--text)}
+button.counter-button {width:46px;height:46px;padding:0;font-size:24px}
 input {
-  width: 100%;
-  background: #111318;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px;
-  color: var(--text);
-  font-size: 17px;
-  outline: none;
-  margin: 8px 0 12px;
+  width:100%;background:#111318;border:1px solid var(--border);
+  border-radius:12px;padding:14px;color:var(--text);
+  font-size:17px;outline:none;margin:8px 0 12px;
 }
+input:focus {border-color:var(--green)}
+.full-button {width:100%;margin-top:8px}
+.helper {color:var(--muted);font-size:12px;line-height:1.5;margin-top:10px}
+.status {margin-top:12px;font-size:14px;font-weight:700}
+.status.debt {color:var(--red)}
+.status.clear {color:var(--green)}
 
-input:focus { border-color: var(--green); }
-
-.full-button {
-  width: 100%;
-  margin-top: 8px;
+/* Weekly running distance display */
+.weekly-distance-row {
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;padding:14px;margin:4px 0 14px;
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:12px;
 }
-
-.helper {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.5;
-  margin-top: 10px;
-}
-
-.status {
-  margin-top: 12px;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.status.debt { color: var(--red); }
-.status.clear { color: var(--green); }
-
-.section-heading {
-  font-size: 18px;
-  font-weight: 800;
-  margin: 22px 2px 12px;
+.weekly-distance-label {color:var(--muted);font-size:14px;font-weight:600}
+.weekly-distance-value {
+  color:var(--green);font-size:22px;font-weight:800;
+  font-variant-numeric:tabular-nums;white-space:nowrap;
 }
 
 .nav {
-  position: fixed;
-  z-index: 100;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-  display: flex;
-  justify-content: space-around;
-  gap: 8px;
-  background: rgba(20, 21, 25, 0.96);
-  border-top: 1px solid var(--border);
-  backdrop-filter: blur(16px);
+  position:fixed;z-index:100;bottom:0;left:0;right:0;
+  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+  display:flex;justify-content:space-around;gap:8px;
+  background:rgba(20,21,25,.96);border-top:1px solid var(--border);
+  backdrop-filter:blur(16px);
 }
-
 .nav button {
-  flex: 1;
-  background: transparent;
-  color: var(--muted);
-  font-size: 12px;
-  padding: 10px 5px;
+  flex:1;background:transparent;color:var(--muted);
+  font-size:12px;padding:10px 5px;
 }
-
-.nav button.active {
-  color: var(--green);
-  background: #202a25;
-}
-
-.nav-icon {
-  display: block;
-  font-size: 20px;
-  margin-bottom: 4px;
-}
-
-.hidden { display: none !important; }
-
+.nav button.active {color:var(--green);background:#202a25}
+.nav-icon {display:block;font-size:20px;margin-bottom:4px}
+.hidden {display:none!important}
 .toast {
-  position: fixed;
-  z-index: 200;
-  left: 50%;
-  bottom: calc(90px + env(safe-area-inset-bottom));
-  transform: translateX(-50%);
-  background: #30343d;
-  color: white;
-  padding: 12px 18px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 650;
-  box-shadow: 0 5px 20px #0008;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s;
+  position:fixed;z-index:200;left:50%;
+  bottom:calc(90px + env(safe-area-inset-bottom));
+  transform:translateX(-50%);background:#30343d;color:white;
+  padding:12px 18px;border-radius:12px;font-size:13px;
+  font-weight:650;box-shadow:0 5px 20px #0008;
+  opacity:0;pointer-events:none;transition:opacity .2s;
 }
-
-.toast.show { opacity: 1; }
-
+.toast.show {opacity:1}
 .file-label {
-  display: block;
-  width: 100%;
-  text-align: center;
-  border-radius: 12px;
-  padding: 13px;
-  background: #30343d;
-  color: white;
-  font-weight: 700;
-  font-size: 15px;
-  margin-top: 10px;
-  cursor: pointer;
+  display:block;width:100%;text-align:center;border-radius:12px;
+  padding:13px;background:#30343d;color:white;font-weight:700;
+  font-size:15px;margin-top:10px;cursor:pointer;
 }
-
-input[type="file"] { display: none; }
-
-@media (max-width: 380px) {
-  .big-number { font-size: 36px; }
-  .debt-card .big-number { font-size: 48px; }
-  .card { padding: 17px; }
+input[type="file"] {display:none}
+@media(max-width:380px) {
+  .big-number {font-size:36px}
+  .debt-card .big-number {font-size:48px}
+  .card {padding:17px}
 }
 </style>
 </head>
@@ -336,41 +164,29 @@ input[type="file"] { display: none; }
 
   <section class="card">
     <div class="card-title">Cigarettes Smoked This Week</div>
-
     <div class="counter-row">
       <div class="counter-value" id="weeklyCigs">0</div>
-
       <div class="counter-controls">
         <button class="counter-button secondary" onclick="changeWeeklyCigs(-1)">−</button>
         <button class="counter-button primary" onclick="changeWeeklyCigs(1)">+</button>
       </div>
     </div>
-
     <div class="helper">Every cigarette adds 1 km to your running debt.</div>
   </section>
 
   <section class="card">
     <div class="card-title">Log Your Run</div>
 
-    <!-- NEW: WEEKLY RUNNING DISTANCE DISPLAY -->
-    <div class="big-number green" id="weeklyKm">0 km</div>
-    <div class="muted small">Running distance completed this week</div>
-
-    <div class="muted small" style="margin-top: 16px;">
-      Add completed running distance (km)
+    <!-- Weekly running distance is displayed here -->
+    <div class="weekly-distance-row">
+      <div class="weekly-distance-label">Weekly Running Distance</div>
+      <div class="weekly-distance-value" id="weeklyRunDistance">0 km</div>
     </div>
 
-    <input
-      id="runInput"
-      type="number"
-      min="0.01"
-      step="0.01"
-      inputmode="decimal"
-      placeholder="Enter distance in km"
-    >
-
+    <div class="muted small">Completed running distance (km)</div>
+    <input id="runInput" type="number" min="0.01" step="0.01"
+      inputmode="decimal" placeholder="Enter distance in km">
     <button class="primary full-button" onclick="logRun()">Submit Run</button>
-
     <div class="helper">
       Only completed distance counts. Extra running does not create credit for future weeks.
     </div>
@@ -382,37 +198,26 @@ input[type="file"] { display: none; }
     <div class="muted small">Your overall outstanding running distance</div>
   </section>
 
-  <div class="muted small" style="text-align:center; line-height:1.6; margin: 38px 8px 10px;">
-    Weekly figures reset automatically every Monday at midnight.<br>
-    Lifetime totals are retained.
-  </div>
-
 </main>
 
 <!-- LIFETIME STATISTICS: ONE CARD ONLY -->
 <main id="lifetimeScreen" class="screen">
-
   <section class="card">
     <div class="card-title">Lifetime Statistics</div>
-
     <div class="stat-row">
       <div class="stat-label">Total cigarettes smoked</div>
       <div class="stat-value" id="lifetimeCigs">0</div>
     </div>
-
     <div class="stat-row">
       <div class="stat-label">Total distance run</div>
       <div class="stat-value green" id="lifetimeKm">0 km</div>
     </div>
-
     <div class="stat-row">
       <div class="stat-label">Total run debt</div>
       <div class="stat-value red" id="lifetimeDebt">0 km</div>
     </div>
-
     <div id="lifetimeStatus" class="status clear">You're all caught up!</div>
   </section>
-
 </main>
 
 <!-- DATA MANAGEMENT -->
@@ -420,34 +225,22 @@ input[type="file"] { display: none; }
 
   <section class="card">
     <div class="card-title">Edit This Week's Records</div>
-
     <label class="small muted" for="editWeeklyCigs">Weekly cigarettes smoked</label>
     <input id="editWeeklyCigs" type="number" min="0" step="1" inputmode="numeric">
-
     <label class="small muted" for="editWeeklyKm">Weekly completed running distance (km)</label>
     <input id="editWeeklyKm" type="number" min="0" step="0.01" inputmode="decimal">
-
     <button class="primary full-button" onclick="saveWeeklyEdits()">Save Weekly Records</button>
-
-    <div class="helper">
-      Changes made here will also adjust your lifetime totals by the same amount.
-    </div>
+    <div class="helper">Changes made here will also adjust your lifetime totals by the same amount.</div>
   </section>
 
   <section class="card">
     <div class="card-title">Edit Lifetime Records</div>
-
     <label class="small muted" for="editLifetimeCigs">Total lifetime cigarettes</label>
     <input id="editLifetimeCigs" type="number" min="0" step="1" inputmode="numeric">
-
     <label class="small muted" for="editLifetimeKm">Total lifetime running distance (km)</label>
     <input id="editLifetimeKm" type="number" min="0" step="0.01" inputmode="decimal">
-
     <button class="primary full-button" onclick="saveLifetimeEdits()">Save Lifetime Records</button>
-
-    <div class="helper">
-      Lifetime totals cannot be lower than the current week's records.
-    </div>
+    <div class="helper">Lifetime totals cannot be lower than the current week's records.</div>
   </section>
 
   <section class="card">
@@ -458,15 +251,10 @@ input[type="file"] { display: none; }
 
   <section class="card">
     <div class="card-title">Backup & Restore</div>
-
     <button class="secondary full-button" onclick="exportBackup()">Export Backup</button>
-
     <label class="file-label" for="restoreFile">Restore From Backup</label>
     <input id="restoreFile" type="file" accept=".json,application/json" onchange="restoreBackup(event)">
-
-    <div class="helper">
-      Export a backup regularly to keep a copy of your records. Backup files contain your app data.
-    </div>
+    <div class="helper">Export a backup regularly to keep a copy of your records. Backup files contain your app data.</div>
   </section>
 
   <section class="card">
@@ -477,21 +265,15 @@ input[type="file"] { display: none; }
 
 </main>
 
-<!-- BOTTOM NAVIGATION -->
 <nav class="nav">
   <button id="navWeekly" class="active" onclick="showScreen('weekly')">
-    <span class="nav-icon">📊</span>
-    Weekly
+    <span class="nav-icon">📊</span>Weekly
   </button>
-
   <button id="navLifetime" onclick="showScreen('lifetime')">
-    <span class="nav-icon">🏆</span>
-    Lifetime
+    <span class="nav-icon">🏆</span>Lifetime
   </button>
-
   <button id="navManagement" onclick="showScreen('management')">
-    <span class="nav-icon">⚙️</span>
-    Manage
+    <span class="nav-icon">⚙️</span>Manage
   </button>
 </nav>
 
@@ -500,83 +282,69 @@ input[type="file"] { display: none; }
 <script>
 const STORAGE_KEY = "smokeToRunData";
 const LEGACY_STORAGE_KEY = "smokeToRunData";
-
 let undoSnapshot = null;
 
 function getMondayKey(date = new Date()) {
   const d = new Date(date);
   const day = d.getDay();
   const diff = day === 0 ? -6 : 1 - day;
-
   d.setDate(d.getDate() + diff);
-  d.setHours(0, 0, 0, 0);
-
+  d.setHours(0,0,0,0);
   return [
     d.getFullYear(),
-    String(d.getMonth() + 1).padStart(2, "0"),
-    String(d.getDate()).padStart(2, "0")
+    String(d.getMonth()+1).padStart(2,"0"),
+    String(d.getDate()).padStart(2,"0")
   ].join("-");
 }
 
 function defaultData() {
   return {
-    version: 2,
-    weekKey: getMondayKey(),
-    weeklyCigs: 0,
-    weeklyKm: 0,
-    lifetimeCigs: 0,
-    lifetimeKm: 0
+    version:2,
+    weekKey:getMondayKey(),
+    weeklyCigs:0,
+    weeklyKm:0,
+    lifetimeCigs:0,
+    lifetimeKm:0
   };
 }
 
 function normaliseData(raw) {
   const data = defaultData();
-
   if (!raw || typeof raw !== "object") return data;
 
   const hasNewFormat =
-    Object.prototype.hasOwnProperty.call(raw, "lifetimeCigs") ||
-    Object.prototype.hasOwnProperty.call(raw, "weeklyCigs");
+    Object.prototype.hasOwnProperty.call(raw,"lifetimeCigs") ||
+    Object.prototype.hasOwnProperty.call(raw,"weeklyCigs");
 
   if (hasNewFormat) {
     data.weekKey = raw.weekKey || getMondayKey();
-    data.weeklyCigs = Math.max(0, Number(raw.weeklyCigs) || 0);
-    data.weeklyKm = Math.max(0, Number(raw.weeklyKm) || 0);
-    data.lifetimeCigs = Math.max(0, Number(raw.lifetimeCigs) || 0);
-    data.lifetimeKm = Math.max(0, Number(raw.lifetimeKm) || 0);
+    data.weeklyCigs = Math.max(0,Number(raw.weeklyCigs)||0);
+    data.weeklyKm = Math.max(0,Number(raw.weeklyKm)||0);
+    data.lifetimeCigs = Math.max(0,Number(raw.lifetimeCigs)||0);
+    data.lifetimeKm = Math.max(0,Number(raw.lifetimeKm)||0);
   } else {
-    // V1 migration: preserve cumulative totals.
-    data.lifetimeCigs = Math.max(0, Number(raw.cigarettes) || 0);
-    data.lifetimeKm = Math.max(0, Number(raw.completedKm) || 0);
+    data.lifetimeCigs = Math.max(0,Number(raw.cigarettes)||0);
+    data.lifetimeKm = Math.max(0,Number(raw.completedKm)||0);
   }
-
   return data;
 }
 
 function loadData() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-
-    if (stored) {
-      return normaliseData(JSON.parse(stored));
-    }
-
+    if (stored) return normaliseData(JSON.parse(stored));
     const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
-
-    if (legacy) {
-      return normaliseData(JSON.parse(legacy));
-    }
-  } catch (error) {
-    console.error("Unable to load saved data:", error);
+    if (legacy) return normaliseData(JSON.parse(legacy));
+  } catch(error) {
+    console.error("Unable to load saved data:",error);
   }
-
   return defaultData();
 }
 
 let appData = loadData();
 
 function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(appData));
 }
 
 function cloneData(data) {
@@ -592,10 +360,8 @@ function undoLastChange() {
     showToast("Nothing to undo");
     return;
   }
-
   appData = cloneData(undoSnapshot);
   undoSnapshot = null;
-
   saveData();
   render();
   showToast("Last change undone");
@@ -603,7 +369,6 @@ function undoLastChange() {
 
 function checkWeeklyReset() {
   const currentWeek = getMondayKey();
-
   if (appData.weekKey !== currentWeek) {
     appData.weekKey = currentWeek;
     appData.weeklyCigs = 0;
@@ -613,45 +378,34 @@ function checkWeeklyReset() {
 }
 
 function weeklyDebt() {
-  return Math.max(0, appData.weeklyCigs - appData.weeklyKm);
+  return Math.max(0,appData.weeklyCigs-appData.weeklyKm);
 }
 
 function lifetimeDebt() {
-  return Math.max(0, appData.lifetimeCigs - appData.lifetimeKm);
+  return Math.max(0,appData.lifetimeCigs-appData.lifetimeKm);
 }
 
 function formatKm(value) {
-  return Number(value.toFixed(2)).toString() + " km";
+  return Number(value.toFixed(2)).toString()+" km";
 }
 
 function render() {
   checkWeeklyReset();
 
-  document.getElementById("weeklyDebt").textContent =
-    formatKm(weeklyDebt());
+  document.getElementById("weeklyDebt").textContent = formatKm(weeklyDebt());
+  document.getElementById("weeklyCigs").textContent = appData.weeklyCigs;
 
-  document.getElementById("weeklyCigs").textContent =
-    appData.weeklyCigs;
-
-  // NEW: Update weekly completed running distance display.
-  document.getElementById("weeklyKm").textContent =
+  // Update the dedicated weekly distance row.
+  document.getElementById("weeklyRunDistance").textContent =
     formatKm(appData.weeklyKm);
 
-  document.getElementById("weeklyLifetimeDebt").textContent =
-    formatKm(lifetimeDebt());
-
-  document.getElementById("lifetimeCigs").textContent =
-    appData.lifetimeCigs;
-
-  document.getElementById("lifetimeKm").textContent =
-    formatKm(appData.lifetimeKm);
-
-  document.getElementById("lifetimeDebt").textContent =
-    formatKm(lifetimeDebt());
+  document.getElementById("weeklyLifetimeDebt").textContent = formatKm(lifetimeDebt());
+  document.getElementById("lifetimeCigs").textContent = appData.lifetimeCigs;
+  document.getElementById("lifetimeKm").textContent = formatKm(appData.lifetimeKm);
+  document.getElementById("lifetimeDebt").textContent = formatKm(lifetimeDebt());
 
   const status = document.getElementById("lifetimeStatus");
-
-  if (lifetimeDebt() > 0) {
+  if (lifetimeDebt()>0) {
     status.textContent = "You still have running debt to clear.";
     status.className = "status debt";
   } else {
@@ -659,99 +413,71 @@ function render() {
     status.className = "status clear";
   }
 
-  document.getElementById("editWeeklyCigs").value =
-    appData.weeklyCigs;
-
-  document.getElementById("editWeeklyKm").value =
-    appData.weeklyKm;
-
-  document.getElementById("editLifetimeCigs").value =
-    appData.lifetimeCigs;
-
-  document.getElementById("editLifetimeKm").value =
-    appData.lifetimeKm;
+  document.getElementById("editWeeklyCigs").value = appData.weeklyCigs;
+  document.getElementById("editWeeklyKm").value = appData.weeklyKm;
+  document.getElementById("editLifetimeCigs").value = appData.lifetimeCigs;
+  document.getElementById("editLifetimeKm").value = appData.lifetimeKm;
 }
 
 function changeWeeklyCigs(amount) {
   checkWeeklyReset();
-
-  const newValue = appData.weeklyCigs + amount;
-
-  if (newValue < 0) {
+  const newValue = appData.weeklyCigs+amount;
+  if (newValue<0) {
     showToast("Cigarette count cannot go below zero");
     return;
   }
-
   recordUndo();
-
   appData.weeklyCigs = newValue;
   appData.lifetimeCigs += amount;
-
   saveData();
   render();
 }
 
 function logRun() {
   checkWeeklyReset();
-
   const input = document.getElementById("runInput");
   const distance = Number(input.value);
 
-  if (!Number.isFinite(distance) || distance <= 0) {
+  if (!Number.isFinite(distance)||distance<=0) {
     showToast("Enter a valid running distance");
     return;
   }
 
   recordUndo();
-
   appData.weeklyKm += distance;
   appData.lifetimeKm += distance;
-
   saveData();
   render();
-
   input.value = "";
-  showToast(formatKm(distance) + " logged successfully");
+  showToast(formatKm(distance)+" logged successfully");
 }
 
 function saveWeeklyEdits() {
   checkWeeklyReset();
+  const newCigs = Number(document.getElementById("editWeeklyCigs").value);
+  const newKm = Number(document.getElementById("editWeeklyKm").value);
 
-  const newCigs =
-    Number(document.getElementById("editWeeklyCigs").value);
-
-  const newKm =
-    Number(document.getElementById("editWeeklyKm").value);
-
-  if (
-    !Number.isInteger(newCigs) ||
-    newCigs < 0 ||
-    !Number.isFinite(newKm) ||
-    newKm < 0
-  ) {
+  if (!Number.isInteger(newCigs)||newCigs<0||
+      !Number.isFinite(newKm)||newKm<0) {
     showToast("Please enter valid weekly records");
     render();
     return;
   }
 
-  const cigDifference = newCigs - appData.weeklyCigs;
-  const kmDifference = newKm - appData.weeklyKm;
+  const cigDifference = newCigs-appData.weeklyCigs;
+  const kmDifference = newKm-appData.weeklyKm;
 
-  if (
-    appData.lifetimeCigs + cigDifference < 0 ||
-    appData.lifetimeKm + kmDifference < 0
-  ) {
+  if (appData.lifetimeCigs+cigDifference<0||
+      appData.lifetimeKm+kmDifference<0) {
     showToast("Weekly changes cannot make lifetime totals negative");
     return;
   }
 
   recordUndo();
-
   appData.weeklyCigs = newCigs;
   appData.weeklyKm = newKm;
   appData.lifetimeCigs += cigDifference;
   appData.lifetimeKm += kmDifference;
-
   saveData();
   render();
   showToast("Weekly records updated");
@@ -759,29 +485,19 @@ function saveWeeklyEdits() {
 
 function saveLifetimeEdits() {
   checkWeeklyReset();
+  const newCigs = Number(document.getElementById("editLifetimeCigs").value);
+  const newKm = Number(document.getElementById("editLifetimeKm").value);
 
-  const newCigs =
-    Number(document.getElementById("editLifetimeCigs").value);
-
-  const newKm =
-    Number(document.getElementById("editLifetimeKm").value);
-
-  if (
-    !Number.isInteger(newCigs) ||
-    newCigs < appData.weeklyCigs ||
-    !Number.isFinite(newKm) ||
-    newKm < appData.weeklyKm
-  ) {
+  if (!Number.isInteger(newCigs)||newCigs<appData.weeklyCigs||
+      !Number.isFinite(newKm)||newKm<appData.weeklyKm) {
     showToast("Lifetime totals cannot be lower than this week's records");
     render();
     return;
   }
 
   recordUndo();
-
   appData.lifetimeCigs = newCigs;
   appData.lifetimeKm = newKm;
-
   saveData();
   render();
   showToast("Lifetime records updated");
@@ -789,23 +505,16 @@ function saveLifetimeEdits() {
 
 function exportBackup() {
   const backup = {
-    app: "Run to Smoke",
-    exportedAt: new Date().toISOString(),
-    data: appData
+    app:"Run to Smoke",
+    exportedAt:new Date().toISOString(),
+    data:appData
   };
-
-  const blob = new Blob(
-    [JSON.stringify(backup, null, 2)],
-    { type: "application/json" }
-  );
-
+  const blob = new Blob([JSON.stringify(backup,null,2)],{type:"application/json"});
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
-
   link.href = url;
   link.download = "run-to-smoke-backup.json";
   link.click();
-
   URL.revokeObjectURL(url);
   showToast("Backup exported");
 }
@@ -815,42 +524,30 @@ function restoreBackup(event) {
   if (!file) return;
 
   const reader = new FileReader();
-
   reader.onload = function(e) {
     try {
       const parsed = JSON.parse(e.target.result);
-      const imported = parsed.data || parsed;
-
-      if (!imported || typeof imported !== "object") {
-        throw new Error("Invalid backup");
-      }
+      const imported = parsed.data||parsed;
+      if (!imported||typeof imported!=="object") throw new Error("Invalid backup");
 
       const restored = normaliseData(imported);
-
-      if (
-        restored.lifetimeCigs < restored.weeklyCigs ||
-        restored.lifetimeKm < restored.weeklyKm
-      ) {
+      if (restored.lifetimeCigs<restored.weeklyCigs||
+          restored.lifetimeKm<restored.weeklyKm) {
         throw new Error("Backup totals are inconsistent");
       }
 
       recordUndo();
-
       appData = restored;
-
       checkWeeklyReset();
       saveData();
       render();
-
       showToast("Backup restored successfully");
-    } catch (error) {
+    } catch(error) {
       showToast("Unable to restore this backup");
       console.error(error);
     }
-
     event.target.value = "";
   };
-
   reader.readAsText(file);
 }
 
@@ -858,13 +555,10 @@ function resetAllData() {
   const confirmed = confirm(
     "Are you sure you want to reset ALL weekly and lifetime records? This cannot be undone."
   );
-
   if (!confirmed) return;
 
   recordUndo();
-
   appData = defaultData();
-
   saveData();
   render();
   showToast("All records have been reset");
@@ -872,56 +566,44 @@ function resetAllData() {
 
 function showScreen(screenName) {
   const screens = {
-    weekly: "weeklyScreen",
-    lifetime: "lifetimeScreen",
-    management: "managementScreen"
+    weekly:"weeklyScreen",
+    lifetime:"lifetimeScreen",
+    management:"managementScreen"
   };
 
-  Object.values(screens).forEach(id => {
+  Object.values(screens).forEach(id=>{
     document.getElementById(id).classList.remove("active");
   });
-
   document.getElementById(screens[screenName]).classList.add("active");
 
-  document.querySelectorAll(".nav button").forEach(button => {
+  document.querySelectorAll(".nav button").forEach(button=>{
     button.classList.remove("active");
   });
 
   const navButtons = {
-    weekly: "navWeekly",
-    lifetime: "navLifetime",
-    management: "navManagement"
+    weekly:"navWeekly",
+    lifetime:"navLifetime",
+    management:"navManagement"
   };
-
   document.getElementById(navButtons[screenName]).classList.add("active");
 
-  window.scrollTo({ top: 0, behavior: "instant" });
-
+  window.scrollTo({top:0,behavior:"instant"});
   showHeader();
   render();
-
-  requestAnimationFrame(() => {
-    updateHeaderVisibility();
-  });
+  requestAnimationFrame(updateHeaderVisibility);
 }
 
 function showToast(message) {
   const toast = document.getElementById("toast");
-
   toast.textContent = message;
   toast.classList.add("show");
-
   clearTimeout(showToast.timeout);
-
-  showToast.timeout = setTimeout(() => {
+  showToast.timeout = setTimeout(()=>{
     toast.classList.remove("show");
-  }, 2200);
+  },2200);
 }
 
-/* --------------------------------
-   HEADER VISIBILITY
-   -------------------------------- */
-
+/* HEADER VISIBILITY */
 const appHeader = document.getElementById("appHeader");
 let scrollTicking = false;
 
@@ -941,37 +623,28 @@ function updateHeaderVisibility() {
   if (!firstCard) return;
 
   const firstCardTop = firstCard.getBoundingClientRect().top;
+  const headerTop = parseFloat(getComputedStyle(appHeader).top)||0;
+  const headerBottom = headerTop+appHeader.offsetHeight;
 
-  const headerTop =
-    parseFloat(getComputedStyle(appHeader).top) || 0;
-
-  const headerHeight = appHeader.offsetHeight;
-
-  // Header reappears only after the first card's top border
-  // is fully below the header's original bottom edge.
-  const visibilityBoundary = headerTop + headerHeight + 2;
-
-  if (firstCardTop > visibilityBoundary) {
+  if (firstCardTop>headerBottom+2) {
     showHeader();
   } else {
     hideHeader();
   }
 }
 
-window.addEventListener("scroll", () => {
+window.addEventListener("scroll",()=>{
   if (scrollTicking) return;
-
   scrollTicking = true;
-
-  requestAnimationFrame(() => {
+  requestAnimationFrame(()=>{
     updateHeaderVisibility();
     scrollTicking = false;
   });
-}, { passive: true });
+},{passive:true});
 
-window.addEventListener("resize", updateHeaderVisibility);
+window.addEventListener("resize",updateHeaderVisibility);
 
-document.addEventListener("visibilitychange", () => {
+document.addEventListener("visibilitychange",()=>{
   if (!document.hidden) {
     checkWeeklyReset();
     render();
@@ -979,20 +652,17 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
-window.addEventListener("pageshow", () => {
+window.addEventListener("pageshow",()=>{
   checkWeeklyReset();
   render();
   updateHeaderVisibility();
 });
 
-// INITIALISE
+/* INITIALISE */
 checkWeeklyReset();
 saveData();
 render();
-
-requestAnimationFrame(() => {
-  updateHeaderVisibility();
-});
+requestAnimationFrame(updateHeaderVisibility);
 </script>
 
 </body>
