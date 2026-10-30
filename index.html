@@ -49,6 +49,7 @@ body {
 }
 
 /* HEADER */
+
 header {
   position: sticky;
   top: calc(env(safe-area-inset-top) + 4px);
@@ -84,6 +85,7 @@ h1 {
 }
 
 /* CONTENT */
+
 .screen {
   display: none;
 }
@@ -284,17 +286,8 @@ input:focus {
   color: #ff858d;
 }
 
-.section-heading {
-  font-size: 16px;
-  font-weight: 800;
-  margin: 23px 0 12px;
-}
-
-.hidden {
-  display: none !important;
-}
-
 /* BOTTOM NAVIGATION */
+
 .bottom-nav {
   position: fixed;
   z-index: 100;
@@ -398,8 +391,8 @@ input:focus {
           <div class="description">1 cigarette = 1km of running</div>
         </div>
         <div class="counter">
-          <button class="circle-btn" onclick="changeWeeklyCigs(-1)" aria-label="Decrease cigarettes">−</button>
-          <button class="circle-btn" onclick="changeWeeklyCigs(1)" aria-label="Increase cigarettes">+</button>
+          <button class="circle-btn" onclick="changeWeeklyCigs(-1)">−</button>
+          <button class="circle-btn" onclick="changeWeeklyCigs(1)">+</button>
         </div>
       </div>
     </div>
@@ -435,7 +428,7 @@ input:focus {
     </div>
   </section>
 
-  <!-- LIFETIME STATS -->
+  <!-- LIFETIME STATS: ORIGINAL SINGLE-CARD STYLE -->
   <section id="lifetimeScreen" class="screen">
 
     <div class="card">
@@ -459,25 +452,6 @@ input:focus {
       <div id="lifetimeStatus" class="status">Debt cleared</div>
     </div>
 
-    <div class="card">
-      <div class="card-title">How your debt is calculated</div>
-      <div class="stat-row">
-        <div class="stat-label">Lifetime cigarettes</div>
-        <div class="stat-value" id="formulaCigs">0 km</div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-label">Lifetime running</div>
-        <div class="stat-value green" id="formulaRun">0 km</div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-label">Outstanding distance</div>
-        <div class="stat-value red" id="formulaDebt">0 km</div>
-      </div>
-      <div class="description">
-        Lifetime debt = total cigarettes smoked − total kilometres run.
-        The minimum debt is zero. Extra running does not create credit.
-      </div>
-    </div>
   </section>
 
   <!-- DATA MANAGEMENT -->
@@ -546,7 +520,6 @@ input:focus {
 
 </div>
 
-<!-- BOTTOM NAVIGATION -->
 <nav class="bottom-nav">
   <button class="nav-btn active" id="navWeekly" onclick="showScreen('weekly')">
     <span class="nav-icon">📊</span>
@@ -621,8 +594,6 @@ function normaliseData(saved) {
 
   if (!saved || typeof saved !== "object") return result;
 
-  // Support older app versions that stored cumulative totals
-  // under "cigarettes" and "completedKm".
   result.lifetimeCigs = Math.max(
     0,
     Number(saved.lifetimeCigs ?? saved.cigarettes ?? 0) || 0
@@ -640,7 +611,6 @@ function normaliseData(saved) {
     result.weeklyRun = Math.max(0, Number(saved.weeklyRun ?? 0) || 0);
   }
 
-  // Ensure lifetime totals are never below this week's figures.
   result.lifetimeCigs = Math.max(result.lifetimeCigs, result.weeklyCigs);
   result.lifetimeRun = Math.max(result.lifetimeRun, result.weeklyRun);
 
@@ -723,10 +693,6 @@ function render() {
   document.getElementById("lifeRun").textContent = formatKm(data.lifetimeRun);
   document.getElementById("lifeDebt").textContent = formatKm(lifetimeDebt);
 
-  document.getElementById("formulaCigs").textContent = formatKm(data.lifetimeCigs);
-  document.getElementById("formulaRun").textContent = formatKm(data.lifetimeRun);
-  document.getElementById("formulaDebt").textContent = formatKm(lifetimeDebt);
-
   const lifetimeStatus = document.getElementById("lifetimeStatus");
   lifetimeStatus.textContent = lifetimeDebt > 0 ? "Lifetime debt outstanding" : "Lifetime debt cleared";
   lifetimeStatus.classList.toggle("in-debt", lifetimeDebt > 0);
@@ -799,7 +765,6 @@ function saveWeeklyEdits() {
   data.weeklyCigs = newCigs;
   data.weeklyRun = newRun;
 
-  // Keep lifetime figures consistent with weekly adjustments.
   data.lifetimeCigs = Math.max(
     data.weeklyCigs,
     data.lifetimeCigs + cigaretteDifference
@@ -890,7 +855,6 @@ async function restoreBackup() {
     const text = await file.text();
     const parsed = JSON.parse(text);
     const restored = parsed.data || parsed;
-
     const newData = normaliseData(restored);
 
     if (
@@ -960,10 +924,14 @@ function showScreen(screen) {
   document.getElementById("navLifetime").classList.toggle("active", screen === "lifetime");
   document.getElementById("navManagement").classList.toggle("active", screen === "management");
 
-  // Return to the top when changing screens.
-  window.scrollTo({ top: 0, behavior: "instant" });
+  window.scrollTo(0, 0);
   showHeader();
+  previousScrollY = 0;
   render();
+
+  requestAnimationFrame(() => {
+    calculateHeaderThreshold();
+  });
 }
 
 /* HEADER SCROLL BEHAVIOUR */
@@ -971,23 +939,38 @@ function showScreen(screen) {
 const appHeader = document.getElementById("appHeader");
 
 let previousScrollY = window.scrollY;
-let scrollDirection = "up";
-let headerHideThreshold = 0;
+let firstSectionThreshold = 0;
 
 function calculateHeaderThreshold() {
-  const firstDataSection = document.querySelector(".screen.active .card");
+  const activeScreenElement = document.querySelector(".screen.active");
 
-  if (!firstDataSection) {
-    headerHideThreshold = 0;
+  if (!activeScreenElement) return;
+
+  const firstCard = activeScreenElement.querySelector(".card");
+
+  if (!firstCard) {
+    firstSectionThreshold = 0;
     return;
   }
 
-  // Hide only after the first data card has scrolled past the header.
-  const headerHeight = appHeader.offsetHeight;
   const cardDocumentTop =
-    firstDataSection.getBoundingClientRect().top + window.scrollY;
+    firstCard.getBoundingClientRect().top + window.scrollY;
 
-  headerHideThreshold = Math.max(0, cardDocumentTop + firstDataSection.offsetHeight - headerHeight);
+  const safeTop = parseFloat(
+    getComputedStyle(document.documentElement)
+      .getPropertyValue("--safe-top")
+  ) || 0;
+
+  const headerHeight = appHeader.offsetHeight;
+  const stickyTop = parseFloat(
+    getComputedStyle(appHeader).top
+  ) || 0;
+
+  // Hide when the first card reaches the bottom of the sticky header.
+  firstSectionThreshold = Math.max(
+    0,
+    cardDocumentTop - headerHeight - stickyTop + 8
+  );
 }
 
 function showHeader() {
@@ -1011,14 +994,13 @@ window.addEventListener("scroll", () => {
 
     if (currentY <= 5) {
       showHeader();
-    } else if (difference > 2) {
-      scrollDirection = "down";
-
-      if (currentY >= headerHideThreshold) {
+    } else if (difference > 1) {
+      // Scrolling down: hide once the first card reaches the header.
+      if (currentY >= firstSectionThreshold) {
         hideHeader();
       }
-    } else if (difference < -2) {
-      scrollDirection = "up";
+    } else if (difference < -1) {
+      // Scrolling upwards: show the header again.
       showHeader();
     }
 
@@ -1027,7 +1009,9 @@ window.addEventListener("scroll", () => {
   });
 }, { passive: true });
 
-window.addEventListener("resize", calculateHeaderThreshold);
+window.addEventListener("resize", () => {
+  calculateHeaderThreshold();
+});
 
 window.addEventListener("load", () => {
   calculateHeaderThreshold();
@@ -1052,14 +1036,19 @@ function showToast(message) {
 /* START APP */
 
 loadData();
-calculateHeaderThreshold();
 
-// Check for a new week when the app becomes active again.
+requestAnimationFrame(() => {
+  calculateHeaderThreshold();
+});
+
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     checkWeeklyReset();
     render();
-    calculateHeaderThreshold();
+
+    requestAnimationFrame(() => {
+      calculateHeaderThreshold();
+    });
   }
 });
 </script>
