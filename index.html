@@ -1,0 +1,1171 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+
+<meta name="theme-color" content="#101114">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<meta name="apple-mobile-web-app-title" content="Smoke to Run">
+
+<title>Smoke to Run</title>
+
+<style>
+
+:root {
+
+  --bg: #101114;
+
+  --card: #1b1d22;
+
+  --border: #30323a;
+
+  --text: #f5f5f5;
+
+  --muted: #92959f;
+
+  --red: #ff5555;
+
+  --green: #36cf86;
+
+  --blue: #609cff;
+
+}
+
+* {
+
+  box-sizing: border-box;
+
+}
+
+body {
+
+  margin: 0;
+
+  padding: 25px 18px calc(30px + env(safe-area-inset-bottom));
+
+  background: var(--bg);
+
+  color: var(--text);
+
+  font-family: -apple-system, BlinkMacSystemFont,
+
+    "Segoe UI", sans-serif;
+
+  min-height: 100vh;
+
+}
+
+.container {
+
+  max-width: 440px;
+
+  margin: auto;
+
+}
+
+header {
+
+  text-align: center;
+
+  margin: 12px 0 30px;
+
+}
+
+h1 {
+
+  font-size: 27px;
+
+  letter-spacing: 2px;
+
+  margin: 0;
+
+}
+
+.subtitle {
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+  margin-top: 8px;
+
+}
+
+.card {
+
+  background: var(--card);
+
+  border: 1px solid var(--border);
+
+  border-radius: 18px;
+
+  padding: 22px;
+
+  margin-bottom: 16px;
+
+}
+
+.section-label {
+
+  color: var(--muted);
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  text-align: center;
+
+}
+
+.counter {
+
+  font-size: 65px;
+
+  font-weight: 800;
+
+  text-align: center;
+
+  margin: 12px 0 2px;
+
+  font-variant-numeric: tabular-nums;
+
+}
+
+.unit {
+
+  text-align: center;
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+}
+
+.button-row {
+
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 22px;
+
+}
+
+button {
+
+  border: none;
+
+  border-radius: 12px;
+
+  min-height: 53px;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+
+}
+
+button:active {
+
+  transform: scale(0.97);
+
+}
+
+.counter-btn {
+
+  flex: 1;
+
+  color: white;
+
+  font-size: 20px;
+
+}
+
+.minus {
+
+  background: #b93838;
+
+}
+
+.plus {
+
+  background: #168958;
+
+}
+
+.debt-card {
+
+  border-color: #633333;
+
+  background: linear-gradient(145deg, #261a1c, #1b1d22);
+
+}
+
+.debt-number {
+
+  color: var(--red);
+
+  font-size: 58px;
+
+  font-weight: 800;
+
+  text-align: center;
+
+  margin: 10px 0;
+
+  font-variant-numeric: tabular-nums;
+
+}
+
+.debt-number span {
+
+  font-size: 22px;
+
+  color: #ff9999;
+
+}
+
+.debt-caption {
+
+  text-align: center;
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+}
+
+input {
+
+  width: 100%;
+
+  background: #111216;
+
+  border: 1px solid var(--border);
+
+  border-radius: 11px;
+
+  padding: 16px;
+
+  color: white;
+
+  font-size: 18px;
+
+  outline: none;
+
+  min-width: 0;
+
+}
+
+input:focus {
+
+  border-color: var(--blue);
+
+}
+
+.submit-btn {
+
+  width: 100%;
+
+  background: var(--green);
+
+  color: #071c12;
+
+  margin-top: 12px;
+
+}
+
+.stats {
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+
+}
+
+.stat-box {
+
+  background: #111216;
+
+  padding: 15px 10px;
+
+  border-radius: 12px;
+
+  text-align: center;
+
+}
+
+.stat-value {
+
+  font-size: 25px;
+
+  font-weight: 750;
+
+  margin-top: 8px;
+
+  font-variant-numeric: tabular-nums;
+
+}
+
+.stat-label {
+
+  color: var(--muted);
+
+  font-size: 11px;
+
+}
+
+.green {
+
+  color: var(--green);
+
+}
+
+.red {
+
+  color: var(--red);
+
+}
+
+.message {
+
+  min-height: 20px;
+
+  text-align: center;
+
+  color: var(--green);
+
+  font-size: 13px;
+
+  margin-top: 12px;
+
+}
+
+.secondary-btn {
+
+  width: 100%;
+
+  background: #292c34;
+
+  color: #ddd;
+
+  margin-top: 10px;
+
+  min-height: 44px;
+
+  font-size: 13px;
+
+}
+
+.danger-btn {
+
+  color: #ff7777;
+
+  background: #351e20;
+
+}
+
+footer {
+
+  text-align: center;
+
+  color: #656873;
+
+  font-size: 11px;
+
+  margin-top: 25px;
+
+  line-height: 1.6;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+  <h1>SMOKE TO RUN</h1>
+
+  <div class="subtitle">
+
+    Every cigarette comes with a kilometre.
+
+  </div>
+
+</header>
+
+<!-- CIGARETTE COUNTER -->
+
+<div class="card">
+
+  <div class="section-label">
+
+    TOTAL CIGARETTES SMOKED
+
+  </div>
+
+  <div class="counter" id="cigarettes">0</div>
+
+  <div class="unit">Cigarettes</div>
+
+  <div class="button-row">
+
+    <button class="counter-btn minus"
+
+      onclick="changeCigarettes(-1)">
+
+      − 1
+
+    </button>
+
+    <button class="counter-btn plus"
+
+      onclick="changeCigarettes(1)">
+
+      + 1
+
+    </button>
+
+  </div>
+
+</div>
+
+<!-- RUN DEBT -->
+
+<div class="card debt-card">
+
+  <div class="section-label">
+
+    RUN DEBT
+
+  </div>
+
+  <div class="debt-number">
+
+    <span id="debt">0</span>
+
+    <span>/km</span>
+
+  </div>
+
+  <div class="debt-caption">
+
+    Distance remaining to run
+
+  </div>
+
+</div>
+
+<!-- RUN SUBMISSION -->
+
+<div class="card">
+
+  <div class="section-label" style="text-align:left">
+
+    LOG YOUR COMPLETED RUN
+
+  </div>
+
+  <div style="height:15px"></div>
+
+  <form id="runForm">
+
+    <input
+
+      id="runInput"
+
+      type="number"
+
+      inputmode="decimal"
+
+      step="0.01"
+
+      min="0.01"
+
+      placeholder="Enter distance (km)"
+
+      required
+
+    >
+
+    <button class="submit-btn" type="submit">
+
+      SUBMIT RUN
+
+    </button>
+
+  </form>
+
+  <div class="message" id="message"
+
+    aria-live="polite"></div>
+
+</div>
+
+<!-- STATISTICS -->
+
+<div class="card">
+
+  <div class="section-label"
+
+    style="margin-bottom:18px">
+
+    YOUR STATISTICS
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat-box">
+
+      <div class="stat-label">
+
+        TOTAL CIGARETTES
+
+      </div>
+
+      <div class="stat-value" id="totalCigs">0</div>
+
+    </div>
+
+    <div class="stat-box">
+
+      <div class="stat-label">
+
+        TOTAL DISTANCE RUN
+
+      </div>
+
+      <div class="stat-value green">
+
+        <span id="totalRun">0</span> km
+
+      </div>
+
+    </div>
+
+    <div class="stat-box">
+
+      <div class="stat-label">
+
+        RUN DEBT
+
+      </div>
+
+      <div class="stat-value red">
+
+        <span id="remainingDebt">0</span> km
+
+      </div>
+
+    </div>
+
+    <div class="stat-box">
+
+      <div class="stat-label">
+
+        DEBT STATUS
+
+      </div>
+
+      <div class="stat-value" id="status"
+
+        style="font-size:17px">
+
+        CLEAR
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- DATA MANAGEMENT -->
+
+<div class="card">
+
+  <div class="section-label">
+
+    DATA MANAGEMENT
+
+  </div>
+
+  <button class="secondary-btn"
+
+    onclick="undoLast()">
+
+    ↶ UNDO LAST ACTION
+
+  </button>
+
+  <button class="secondary-btn"
+
+    onclick="exportBackup()">
+
+    ↓ EXPORT BACKUP
+
+  </button>
+
+  <button class="secondary-btn"
+
+    onclick="document.getElementById('backupFile').click()">
+
+    ↑ RESTORE BACKUP
+
+  </button>
+
+  <input
+
+    type="file"
+
+    id="backupFile"
+
+    accept=".json,application/json"
+
+    hidden
+
+    onchange="restoreBackup(event)"
+
+  >
+
+  <button class="secondary-btn danger-btn"
+
+    onclick="resetData()">
+
+    RESET ALL DATA
+
+  </button>
+
+</div>
+
+<footer>
+
+  SMOKE TO RUN · VERSION 1.0<br>
+
+  Your progress is saved on this device.
+
+</footer>
+
+</div>
+
+<script>
+
+// ======================================
+
+// DATA STORAGE
+
+// ======================================
+
+const STORAGE_KEY = "smokeToRunData";
+
+const defaultData = {
+
+  cigarettes: 0,
+
+  completedKm: 0,
+
+  debt: 0,
+
+  history: []
+
+};
+
+let data = loadData();
+
+function loadData() {
+
+  try {
+
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (!saved) return structuredClone(defaultData);
+
+    const parsed = JSON.parse(saved);
+
+    if (
+
+      !Number.isInteger(parsed.cigarettes) ||
+
+      parsed.cigarettes < 0 ||
+
+      !Number.isFinite(parsed.completedKm) ||
+
+      parsed.completedKm < 0 ||
+
+      !Number.isFinite(parsed.debt) ||
+
+      parsed.debt < 0 ||
+
+      !Array.isArray(parsed.history)
+
+    ) {
+
+      return structuredClone(defaultData);
+
+    }
+
+    return parsed;
+
+  } catch (error) {
+
+    return structuredClone(defaultData);
+
+  }
+
+}
+
+function saveData() {
+
+  try {
+
+    localStorage.setItem(
+
+      STORAGE_KEY,
+
+      JSON.stringify(data)
+
+    );
+
+    return true;
+
+  } catch (error) {
+
+    showMessage("Unable to save data. Export a backup.", true);
+
+    return false;
+
+  }
+
+}
+
+// ======================================
+
+// DISPLAY
+
+// ======================================
+
+function formatNumber(value) {
+
+  return Number(value.toFixed(2)).toString();
+
+}
+
+function updateDisplay() {
+
+  document.getElementById("cigarettes").textContent =
+
+    data.cigarettes;
+
+  document.getElementById("debt").textContent =
+
+    formatNumber(data.debt);
+
+  document.getElementById("totalCigs").textContent =
+
+    data.cigarettes;
+
+  document.getElementById("totalRun").textContent =
+
+    formatNumber(data.completedKm);
+
+  document.getElementById("remainingDebt").textContent =
+
+    formatNumber(data.debt);
+
+  const status = document.getElementById("status");
+
+  if (data.debt === 0) {
+
+    status.textContent = "CLEAR";
+
+    status.className = "stat-value green";
+
+  } else {
+
+    status.textContent = "OUTSTANDING";
+
+    status.className = "stat-value red";
+
+  }
+
+}
+
+// ======================================
+
+// HISTORY / UNDO
+
+// ======================================
+
+function saveSnapshot(action) {
+
+  data.history.push({
+
+    action: action,
+
+    cigarettes: data.cigarettes,
+
+    completedKm: data.completedKm,
+
+    debt: data.debt
+
+  });
+
+  // Keep the latest 50 actions
+
+  if (data.history.length > 50) {
+
+    data.history.shift();
+
+  }
+
+}
+
+function undoLast() {
+
+  if (data.history.length === 0) {
+
+    showMessage("Nothing to undo.", true);
+
+    return;
+
+  }
+
+  if (!confirm("Undo your last action?")) return;
+
+  const previous = data.history.pop();
+
+  data.cigarettes = previous.cigarettes;
+
+  data.completedKm = previous.completedKm;
+
+  data.debt = previous.debt;
+
+  saveData();
+
+  updateDisplay();
+
+  showMessage("Last action successfully undone.");
+
+}
+
+// ======================================
+
+// CIGARETTE COUNTER
+
+// ======================================
+
+function changeCigarettes(amount) {
+
+  if (amount < 0 && data.cigarettes <= 0) {
+
+    showMessage("Cigarette count cannot go below zero.", true);
+
+    return;
+
+  }
+
+  saveSnapshot(
+
+    amount > 0 ? "Cigarette added" : "Cigarette removed"
+
+  );
+
+  data.cigarettes += amount;
+
+  data.debt = Math.max(
+
+    0,
+
+    data.debt + amount
+
+  );
+
+  saveData();
+
+  updateDisplay();
+
+  showMessage(
+
+    amount > 0
+
+      ? "1 cigarette added. +1km debt."
+
+      : "1 cigarette removed. -1km debt."
+
+  );
+
+}
+
+// ======================================
+
+// RUN SUBMISSION
+
+// ======================================
+
+document.getElementById("runForm")
+
+  .addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const input = document.getElementById("runInput");
+
+    const distance = Number(input.value);
+
+    if (!Number.isFinite(distance) || distance <= 0) {
+
+      showMessage("Please enter a valid distance.", true);
+
+      return;
+
+    }
+
+    if (distance > 1000) {
+
+      showMessage("Please check your distance entry.", true);
+
+      return;
+
+    }
+
+    saveSnapshot("Running distance submitted");
+
+    data.completedKm = Number(
+
+      (data.completedKm + distance).toFixed(2)
+
+    );
+
+    // No excess running credit carried forward
+
+    data.debt = Math.max(
+
+      0,
+
+      Number((data.debt - distance).toFixed(2))
+
+    );
+
+    saveData();
+
+    updateDisplay();
+
+    input.value = "";
+
+    showMessage(
+
+      distance + "km recorded successfully!"
+
+    );
+
+  });
+
+// ======================================
+
+// MESSAGE
+
+// ======================================
+
+function showMessage(message, error = false) {
+
+  const element = document.getElementById("message");
+
+  element.textContent = message;
+
+  element.style.color = error
+
+    ? "#ff7777"
+
+    : "#36cf86";
+
+}
+
+// ======================================
+
+// BACKUP EXPORT
+
+// ======================================
+
+function exportBackup() {
+
+  const backup = {
+
+    app: "Smoke to Run",
+
+    version: 1,
+
+    exportedAt: new Date().toISOString(),
+
+    data: data
+
+  };
+
+  const blob = new Blob(
+
+    [JSON.stringify(backup, null, 2)],
+
+    { type: "application/json" }
+
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+
+  link.href = url;
+
+  link.download = "smoke-to-run-backup.json";
+
+  link.click();
+
+  URL.revokeObjectURL(url);
+
+  showMessage("Backup exported.");
+
+}
+
+// ======================================
+
+// BACKUP RESTORE
+
+// ======================================
+
+function restoreBackup(event) {
+
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function() {
+
+    try {
+
+      const backup = JSON.parse(reader.result);
+
+      const restored = backup.data;
+
+      if (
+
+        backup.app !== "Smoke to Run" ||
+
+        !restored ||
+
+        !Number.isInteger(restored.cigarettes) ||
+
+        restored.cigarettes < 0 ||
+
+        !Number.isFinite(restored.completedKm) ||
+
+        restored.completedKm < 0 ||
+
+        !Number.isFinite(restored.debt) ||
+
+        restored.debt < 0 ||
+
+        !Array.isArray(restored.history)
+
+      ) {
+
+        throw new Error("Invalid backup");
+
+      }
+
+      if (!confirm("Replace your current data with this backup?")) {
+
+        return;
+
+      }
+
+      data = restored;
+
+      saveData();
+
+      updateDisplay();
+
+      showMessage("Backup restored successfully.");
+
+    } catch (error) {
+
+      showMessage("Invalid backup file.", true);
+
+    } finally {
+
+      event.target.value = "";
+
+    }
+
+  };
+
+  reader.readAsText(file);
+
+}
+
+// ======================================
+
+// RESET
+
+// ======================================
+
+function resetData() {
+
+  const confirmation = confirm(
+
+    "WARNING: This will permanently delete all your cigarette and running records on this device. Continue?"
+
+  );
+
+  if (!confirmation) return;
+
+  data = structuredClone(defaultData);
+
+  if (saveData()) {
+
+    updateDisplay();
+
+    showMessage("All data has been reset.");
+
+  }
+
+}
+
+// ======================================
+
+// INITIALISE APP
+
+// ======================================
+
+updateDisplay();
+
+</script>
+
+</body>
+
+</html>
