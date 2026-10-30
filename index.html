@@ -16,9 +16,9 @@
 
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<meta name="apple-mobile-web-app-title" content="Smoke to Run">
+<meta name="apple-mobile-web-app-title" content="Run to Smoke">
 
-<title>Smoke to Run</title>
+<title>Run to Smoke</title>
 
 <style>
 
@@ -42,65 +42,35 @@
 
 }
 
-* {
-
-  box-sizing: border-box;
-
-}
+* { box-sizing: border-box; }
 
 body {
 
   margin: 0;
 
-  padding: 25px 18px calc(30px + env(safe-area-inset-bottom));
+  padding: 20px 16px calc(105px + env(safe-area-inset-bottom));
 
   background: var(--bg);
 
   color: var(--text);
 
-  font-family: -apple-system, BlinkMacSystemFont,
-
-    "Segoe UI", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   min-height: 100vh;
 
 }
 
-.container {
+.container { max-width: 440px; margin: auto; }
 
-  max-width: 440px;
+header { text-align: center; margin: 12px 0 24px; }
 
-  margin: auto;
+h1 { font-size: 27px; letter-spacing: 2px; margin: 0; }
 
-}
+.subtitle { color: var(--muted); font-size: 13px; margin-top: 8px; }
 
-header {
+.screen { display: none; }
 
-  text-align: center;
-
-  margin: 12px 0 30px;
-
-}
-
-h1 {
-
-  font-size: 27px;
-
-  letter-spacing: 2px;
-
-  margin: 0;
-
-}
-
-.subtitle {
-
-  color: var(--muted);
-
-  font-size: 13px;
-
-  margin-top: 8px;
-
-}
+.screen.active { display: block; }
 
 .card {
 
@@ -144,25 +114,9 @@ h1 {
 
 }
 
-.unit {
+.unit { text-align: center; color: var(--muted); font-size: 13px; }
 
-  text-align: center;
-
-  color: var(--muted);
-
-  font-size: 13px;
-
-}
-
-.button-row {
-
-  display: flex;
-
-  gap: 12px;
-
-  margin-top: 22px;
-
-}
+.button-row { display: flex; gap: 12px; margin-top: 22px; }
 
 button {
 
@@ -170,9 +124,9 @@ button {
 
   border-radius: 12px;
 
-  min-height: 53px;
+  min-height: 48px;
 
-  font-size: 16px;
+  font-size: 15px;
 
   font-weight: 700;
 
@@ -182,33 +136,13 @@ button {
 
 }
 
-button:active {
+button:active { transform: scale(0.97); }
 
-  transform: scale(0.97);
+.counter-btn { flex: 1; color: white; font-size: 20px; min-height: 53px; }
 
-}
+.minus { background: #b93838; }
 
-.counter-btn {
-
-  flex: 1;
-
-  color: white;
-
-  font-size: 20px;
-
-}
-
-.minus {
-
-  background: #b93838;
-
-}
-
-.plus {
-
-  background: #168958;
-
-}
+.plus { background: #168958; }
 
 .debt-card {
 
@@ -234,23 +168,9 @@ button:active {
 
 }
 
-.debt-number span {
+.debt-number span { font-size: 22px; color: #ff9999; }
 
-  font-size: 22px;
-
-  color: #ff9999;
-
-}
-
-.debt-caption {
-
-  text-align: center;
-
-  color: var(--muted);
-
-  font-size: 13px;
-
-}
+.debt-caption { text-align: center; color: var(--muted); font-size: 13px; }
 
 input {
 
@@ -262,11 +182,11 @@ input {
 
   border-radius: 11px;
 
-  padding: 16px;
+  padding: 14px;
 
   color: white;
 
-  font-size: 18px;
+  font-size: 17px;
 
   outline: none;
 
@@ -274,11 +194,9 @@ input {
 
 }
 
-input:focus {
+input:focus { border-color: var(--blue); }
 
-  border-color: var(--blue);
-
-}
+input[type="number"] { font-variant-numeric: tabular-nums; }
 
 .submit-btn {
 
@@ -291,6 +209,16 @@ input:focus {
   margin-top: 12px;
 
 }
+
+.total-debt-card {
+
+  border-color: #633333;
+
+  background: linear-gradient(145deg, #301b20, #1b1d22);
+
+}
+
+.total-debt-card .debt-number { font-size: 48px; }
 
 .stats {
 
@@ -306,7 +234,7 @@ input:focus {
 
   background: #111216;
 
-  padding: 15px 10px;
+  padding: 17px 10px;
 
   border-radius: 12px;
 
@@ -324,27 +252,17 @@ input:focus {
 
   font-variant-numeric: tabular-nums;
 
-}
-
-.stat-label {
-
-  color: var(--muted);
-
-  font-size: 11px;
+  overflow-wrap: anywhere;
 
 }
 
-.green {
+.stat-label { color: var(--muted); font-size: 11px; line-height: 1.4; }
 
-  color: var(--green);
+.green { color: var(--green); }
 
-}
+.red { color: var(--red); }
 
-.red {
-
-  color: var(--red);
-
-}
+.blue { color: var(--blue); }
 
 .message {
 
@@ -376,13 +294,105 @@ input:focus {
 
 }
 
-.danger-btn {
+.danger-btn { color: #ff7777; background: #351e20; }
 
-  color: #ff7777;
+.field-group { margin-top: 17px; }
 
-  background: #351e20;
+.field-group label {
+
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 12px;
+
+  margin-bottom: 8px;
+
+  font-weight: 600;
 
 }
+
+.help-text {
+
+  color: var(--muted);
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  margin-top: 12px;
+
+}
+
+.readonly-note {
+
+  text-align: center;
+
+  color: var(--muted);
+
+  font-size: 12px;
+
+  margin-top: 15px;
+
+}
+
+.week-label {
+
+  text-align: center;
+
+  color: var(--muted);
+
+  font-size: 12px;
+
+  margin: -10px 0 18px;
+
+}
+
+.nav {
+
+  position: fixed;
+
+  z-index: 10;
+
+  bottom: 0;
+
+  left: 0;
+
+  right: 0;
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 8px;
+
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+
+  background: rgba(20,21,25,.97);
+
+  border-top: 1px solid var(--border);
+
+  backdrop-filter: blur(12px);
+
+}
+
+.nav button {
+
+  background: transparent;
+
+  color: var(--muted);
+
+  min-height: 48px;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+
+}
+
+.nav button.active { color: var(--green); background: #202a26; }
+
+.nav-icon { display: block; font-size: 19px; margin-bottom: 2px; }
 
 footer {
 
@@ -408,265 +418,217 @@ footer {
 
 <header>
 
-  <h1>SMOKE TO RUN</h1>
+  <h1>RUN TO SMOKE</h1>
 
-  <div class="subtitle">
-
-    Every cigarette comes with a kilometre.
-
-  </div>
+  <div class="subtitle">Every cigarette comes with a kilometre.</div>
 
 </header>
 
-<!-- CIGARETTE COUNTER -->
+<!-- SCREEN 1: WEEKLY TRACKER -->
 
-<div class="card">
+<section id="weeklyScreen" class="screen active">
 
-  <div class="section-label">
+  <div class="week-label" id="weekLabel">Current week</div>
 
-    TOTAL CIGARETTES SMOKED
+  <div class="card">
 
-  </div>
+    <div class="section-label">WEEKLY CIGARETTES SMOKED</div>
 
-  <div class="counter" id="cigarettes">0</div>
+    <div class="counter" id="weeklyCigs">0</div>
 
-  <div class="unit">Cigarettes</div>
+    <div class="unit">Cigarettes this week</div>
 
-  <div class="button-row">
+    <div class="button-row">
 
-    <button class="counter-btn minus"
+      <button class="counter-btn minus" onclick="changeWeeklyCigs(-1)">− 1</button>
 
-      onclick="changeCigarettes(-1)">
-
-      − 1
-
-    </button>
-
-    <button class="counter-btn plus"
-
-      onclick="changeCigarettes(1)">
-
-      + 1
-
-    </button>
-
-  </div>
-
-</div>
-
-<!-- RUN DEBT -->
-
-<div class="card debt-card">
-
-  <div class="section-label">
-
-    RUN DEBT
-
-  </div>
-
-  <div class="debt-number">
-
-    <span id="debt">0</span>
-
-    <span>/km</span>
-
-  </div>
-
-  <div class="debt-caption">
-
-    Distance remaining to run
-
-  </div>
-
-</div>
-
-<!-- RUN SUBMISSION -->
-
-<div class="card">
-
-  <div class="section-label" style="text-align:left">
-
-    LOG YOUR COMPLETED RUN
-
-  </div>
-
-  <div style="height:15px"></div>
-
-  <form id="runForm">
-
-    <input
-
-      id="runInput"
-
-      type="number"
-
-      inputmode="decimal"
-
-      step="0.01"
-
-      min="0.01"
-
-      placeholder="Enter distance (km)"
-
-      required
-
-    >
-
-    <button class="submit-btn" type="submit">
-
-      SUBMIT RUN
-
-    </button>
-
-  </form>
-
-  <div class="message" id="message"
-
-    aria-live="polite"></div>
-
-</div>
-
-<!-- STATISTICS -->
-
-<div class="card">
-
-  <div class="section-label"
-
-    style="margin-bottom:18px">
-
-    YOUR STATISTICS
-
-  </div>
-
-  <div class="stats">
-
-    <div class="stat-box">
-
-      <div class="stat-label">
-
-        TOTAL CIGARETTES
-
-      </div>
-
-      <div class="stat-value" id="totalCigs">0</div>
-
-    </div>
-
-    <div class="stat-box">
-
-      <div class="stat-label">
-
-        TOTAL DISTANCE RUN
-
-      </div>
-
-      <div class="stat-value green">
-
-        <span id="totalRun">0</span> km
-
-      </div>
-
-    </div>
-
-    <div class="stat-box">
-
-      <div class="stat-label">
-
-        RUN DEBT
-
-      </div>
-
-      <div class="stat-value red">
-
-        <span id="remainingDebt">0</span> km
-
-      </div>
-
-    </div>
-
-    <div class="stat-box">
-
-      <div class="stat-label">
-
-        DEBT STATUS
-
-      </div>
-
-      <div class="stat-value" id="status"
-
-        style="font-size:17px">
-
-        CLEAR
-
-      </div>
+      <button class="counter-btn plus" onclick="changeWeeklyCigs(1)">+ 1</button>
 
     </div>
 
   </div>
 
-</div>
+  <div class="card debt-card">
 
-<!-- DATA MANAGEMENT -->
+    <div class="section-label">WEEKLY RUN DEBT</div>
 
-<div class="card">
+    <div class="debt-number"><span id="weeklyDebt">0</span><span> /km</span></div>
 
-  <div class="section-label">
-
-    DATA MANAGEMENT
+    <div class="debt-caption">Distance remaining to run this week</div>
 
   </div>
 
-  <button class="secondary-btn"
+  <div class="card">
 
-    onclick="undoLast()">
+    <div class="section-label" style="text-align:left">LOG YOUR COMPLETED RUN</div>
 
-    ↶ UNDO LAST ACTION
+    <div style="height:15px"></div>
 
-  </button>
+    <form id="runForm">
 
-  <button class="secondary-btn"
+      <input id="runInput" type="number" inputmode="decimal"
 
-    onclick="exportBackup()">
+        step="0.01" min="0.01" placeholder="Enter distance (km)" required>
 
-    ↓ EXPORT BACKUP
+      <button class="submit-btn" type="submit">SUBMIT RUN</button>
 
-  </button>
+    </form>
 
-  <button class="secondary-btn"
+    <div class="message" id="weeklyMessage" aria-live="polite"></div>
 
-    onclick="document.getElementById('backupFile').click()">
+  </div>
 
-    ↑ RESTORE BACKUP
+  <div class="card total-debt-card">
 
-  </button>
+    <div class="section-label">TOTAL RUN DEBT · ALL TIME</div>
 
-  <input
+    <div class="debt-number"><span id="totalDebt">0</span><span> /km</span></div>
 
-    type="file"
+    <div class="debt-caption">Your lifetime outstanding running distance</div>
 
-    id="backupFile"
+  </div>
 
-    accept=".json,application/json"
+</section>
 
-    hidden
+<!-- SCREEN 2: LIFETIME STATISTICS -->
 
-    onchange="restoreBackup(event)"
+<section id="statsScreen" class="screen">
 
-  >
+  <div class="card">
 
-  <button class="secondary-btn danger-btn"
+    <div class="section-label" style="margin-bottom:18px">LIFETIME STATISTICS</div>
 
-    onclick="resetData()">
+    <div class="stats">
 
-    RESET ALL DATA
+      <div class="stat-box">
 
-  </button>
+        <div class="stat-label">TOTAL CIGARETTES SMOKED</div>
 
-</div>
+        <div class="stat-value" id="lifeCigs">0</div>
+
+      </div>
+
+      <div class="stat-box">
+
+        <div class="stat-label">TOTAL DISTANCE RUN</div>
+
+        <div class="stat-value green"><span id="lifeKm">0</span> km</div>
+
+      </div>
+
+      <div class="stat-box">
+
+        <div class="stat-label">TOTAL RUN DEBT</div>
+
+        <div class="stat-value red"><span id="lifeDebt">0</span> km</div>
+
+      </div>
+
+      <div class="stat-box">
+
+        <div class="stat-label">DEBT STATUS</div>
+
+        <div class="stat-value" id="lifeStatus" style="font-size:17px">CLEAR</div>
+
+      </div>
+
+    </div>
+
+    <div class="readonly-note">Lifetime statistics are read-only on this screen.</div>
+
+  </div>
+
+</section>
+
+<!-- SCREEN 3: DATA MANAGEMENT -->
+
+<section id="manageScreen" class="screen">
+
+  <div class="card">
+
+    <div class="section-label">EDIT WEEKLY FIGURES</div>
+
+    <div class="field-group">
+
+      <label for="editWeeklyCigs">Weekly cigarettes smoked</label>
+
+      <input id="editWeeklyCigs" type="number" min="0" step="1" inputmode="numeric">
+
+    </div>
+
+    <div class="field-group">
+
+      <label for="editWeeklyKm">Weekly running distance (km)</label>
+
+      <input id="editWeeklyKm" type="number" min="0" step="0.01" inputmode="decimal">
+
+    </div>
+
+    <button class="submit-btn" onclick="saveWeeklyEdits()">SAVE WEEKLY FIGURES</button>
+
+    <div class="help-text">
+
+      Changes to weekly figures will also adjust lifetime totals by the same difference.
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="section-label">EDIT LIFETIME FIGURES</div>
+
+    <div class="field-group">
+
+      <label for="editLifeCigs">Total cigarettes smoked</label>
+
+      <input id="editLifeCigs" type="number" min="0" step="1" inputmode="numeric">
+
+    </div>
+
+    <div class="field-group">
+
+      <label for="editLifeKm">Total running distance (km)</label>
+
+      <input id="editLifeKm" type="number" min="0" step="0.01" inputmode="decimal">
+
+    </div>
+
+    <button class="submit-btn" onclick="saveLifetimeEdits()">SAVE LIFETIME FIGURES</button>
+
+    <div class="help-text">
+
+      Lifetime totals cannot be lower than the corresponding current-week figures.
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="section-label">BACKUP & RESTORE</div>
+
+    <button class="secondary-btn" onclick="undoLast()">↶ UNDO LAST ACTION</button>
+
+    <button class="secondary-btn" onclick="exportBackup()">↓ EXPORT BACKUP</button>
+
+    <button class="secondary-btn" onclick="document.getElementById('backupFile').click()">↑ RESTORE BACKUP</button>
+
+    <input type="file" id="backupFile" accept=".json,application/json"
+
+      hidden onchange="restoreBackup(event)">
+
+    <button class="secondary-btn danger-btn" onclick="resetData()">RESET ALL DATA</button>
+
+    <div class="message" id="manageMessage" aria-live="polite"></div>
+
+  </div>
+
+</section>
 
 <footer>
 
-  SMOKE TO RUN · VERSION 1.0<br>
+  RUN TO SMOKE · VERSION 2.0<br>
 
   Your progress is saved on this device.
 
@@ -674,29 +636,133 @@ footer {
 
 </div>
 
+<!-- BOTTOM NAVIGATION -->
+
+<nav class="nav">
+
+  <button id="navWeekly" class="active" onclick="showScreen('weekly')">
+
+    <span class="nav-icon">🏃</span>WEEKLY
+
+  </button>
+
+  <button id="navStats" onclick="showScreen('stats')">
+
+    <span class="nav-icon">📊</span>LIFETIME
+
+  </button>
+
+  <button id="navManage" onclick="showScreen('manage')">
+
+    <span class="nav-icon">⚙️</span>MANAGE
+
+  </button>
+
+</nav>
+
 <script>
+
+"use strict";
 
 // ======================================
 
-// DATA STORAGE
+// DATA MODEL AND STORAGE
 
 // ======================================
 
 const STORAGE_KEY = "smokeToRunData";
 
-const defaultData = {
+function currentWeekKey() {
 
-  cigarettes: 0,
+  const now = new Date();
 
-  completedKm: 0,
+  const day = now.getDay(); // Sunday = 0
 
-  debt: 0,
+  const daysSinceMonday = (day + 6) % 7;
 
-  history: []
+  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-};
+  monday.setDate(monday.getDate() - daysSinceMonday);
 
-let data = loadData();
+  const y = monday.getFullYear();
+
+  const m = String(monday.getMonth() + 1).padStart(2, "0");
+
+  const d = String(monday.getDate()).padStart(2, "0");
+
+  return `${y}-${m}-${d}`;
+
+}
+
+function getWeekRangeLabel() {
+
+  const now = new Date();
+
+  const day = (now.getDay() + 6) % 7;
+
+  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  monday.setDate(monday.getDate() - day);
+
+  const sunday = new Date(monday);
+
+  sunday.setDate(sunday.getDate() + 6);
+
+  const options = { day: "numeric", month: "short" };
+
+  return `${monday.toLocaleDateString(undefined, options)} – ${sunday.toLocaleDateString(undefined, options)}`;
+
+}
+
+function makeDefaultData() {
+
+  return {
+
+    version: 2,
+
+    lifetimeCigarettes: 0,
+
+    lifetimeCompletedKm: 0,
+
+    weeklyCigarettes: 0,
+
+    weeklyCompletedKm: 0,
+
+    weekStart: currentWeekKey(),
+
+    history: []
+
+  };
+
+}
+
+function validData(d) {
+
+  return d &&
+
+    Number.isInteger(d.lifetimeCigarettes) &&
+
+    d.lifetimeCigarettes >= 0 &&
+
+    Number.isFinite(d.lifetimeCompletedKm) &&
+
+    d.lifetimeCompletedKm >= 0 &&
+
+    Number.isInteger(d.weeklyCigarettes) &&
+
+    d.weeklyCigarettes >= 0 &&
+
+    Number.isFinite(d.weeklyCompletedKm) &&
+
+    d.weeklyCompletedKm >= 0 &&
+
+    d.lifetimeCigarettes >= d.weeklyCigarettes &&
+
+    d.lifetimeCompletedKm + 0.000001 >= d.weeklyCompletedKm &&
+
+    Array.isArray(d.history);
+
+}
 
 function loadData() {
 
@@ -704,59 +770,85 @@ function loadData() {
 
     const saved = localStorage.getItem(STORAGE_KEY);
 
-    if (!saved) return structuredClone(defaultData);
+    if (!saved) return makeDefaultData();
 
     const parsed = JSON.parse(saved);
 
+    // Migrate the original version 1 data.
+
+    // Old cumulative figures are preserved as lifetime totals.
+
+    // Weekly figures start at zero because old data has no weekly breakdown.
+
     if (
 
-      !Number.isInteger(parsed.cigarettes) ||
+      Number.isInteger(parsed.cigarettes) &&
 
-      parsed.cigarettes < 0 ||
+      parsed.cigarettes >= 0 &&
 
-      !Number.isFinite(parsed.completedKm) ||
+      Number.isFinite(parsed.completedKm) &&
 
-      parsed.completedKm < 0 ||
-
-      !Number.isFinite(parsed.debt) ||
-
-      parsed.debt < 0 ||
-
-      !Array.isArray(parsed.history)
+      parsed.completedKm >= 0
 
     ) {
 
-      return structuredClone(defaultData);
+      return {
+
+        version: 2,
+
+        lifetimeCigarettes: parsed.cigarettes,
+
+        lifetimeCompletedKm: parsed.completedKm,
+
+        weeklyCigarettes: 0,
+
+        weeklyCompletedKm: 0,
+
+        weekStart: currentWeekKey(),
+
+        history: []
+
+      };
 
     }
 
-    return parsed;
+    if (validData(parsed)) {
+
+      return {
+
+        ...parsed,
+
+        version: 2,
+
+        history: parsed.history.slice(-50)
+
+      };
+
+    }
+
+    return makeDefaultData();
 
   } catch (error) {
 
-    return structuredClone(defaultData);
+    return makeDefaultData();
 
   }
 
 }
 
+let data = loadData();
+
 function saveData() {
 
   try {
 
-    localStorage.setItem(
-
-      STORAGE_KEY,
-
-      JSON.stringify(data)
-
-    );
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 
     return true;
 
   } catch (error) {
 
-    showMessage("Unable to save data. Export a backup.", true);
+    showMessage("Unable to save. Please export a backup.", true);
 
     return false;
 
@@ -766,9 +858,49 @@ function saveData() {
 
 // ======================================
 
-// DISPLAY
+// WEEKLY RESET
 
 // ======================================
+
+function checkWeeklyReset() {
+
+  const thisWeek = currentWeekKey();
+
+  if (data.weekStart !== thisWeek) {
+
+    data.weeklyCigarettes = 0;
+
+    data.weeklyCompletedKm = 0;
+
+    data.weekStart = thisWeek;
+
+    data.history = [];
+
+    saveData();
+
+    updateDisplay();
+
+  }
+
+}
+
+// ======================================
+
+// CALCULATIONS AND DISPLAY
+
+// ======================================
+
+function weeklyDebt() {
+
+  return Math.max(0, data.weeklyCigarettes - data.weeklyCompletedKm);
+
+}
+
+function lifetimeDebt() {
+
+  return Math.max(0, data.lifetimeCigarettes - data.lifetimeCompletedKm);
+
+}
 
 function formatNumber(value) {
 
@@ -778,29 +910,21 @@ function formatNumber(value) {
 
 function updateDisplay() {
 
-  document.getElementById("cigarettes").textContent =
+  document.getElementById("weeklyCigs").textContent = data.weeklyCigarettes;
 
-    data.cigarettes;
+  document.getElementById("weeklyDebt").textContent = formatNumber(weeklyDebt());
 
-  document.getElementById("debt").textContent =
+  document.getElementById("totalDebt").textContent = formatNumber(lifetimeDebt());
 
-    formatNumber(data.debt);
+  document.getElementById("lifeCigs").textContent = data.lifetimeCigarettes;
 
-  document.getElementById("totalCigs").textContent =
+  document.getElementById("lifeKm").textContent = formatNumber(data.lifetimeCompletedKm);
 
-    data.cigarettes;
+  document.getElementById("lifeDebt").textContent = formatNumber(lifetimeDebt());
 
-  document.getElementById("totalRun").textContent =
+  const status = document.getElementById("lifeStatus");
 
-    formatNumber(data.completedKm);
-
-  document.getElementById("remainingDebt").textContent =
-
-    formatNumber(data.debt);
-
-  const status = document.getElementById("status");
-
-  if (data.debt === 0) {
+  if (lifetimeDebt() === 0) {
 
     status.textContent = "CLEAR";
 
@@ -814,6 +938,90 @@ function updateDisplay() {
 
   }
 
+  document.getElementById("weekLabel").textContent =
+
+    `WEEK OF ${getWeekRangeLabel()}`;
+
+  // Keep management fields in sync when not actively editing them.
+
+  syncManagementFields();
+
+}
+
+function syncManagementFields() {
+
+  const fields = [
+
+    ["editWeeklyCigs", data.weeklyCigarettes],
+
+    ["editWeeklyKm", formatNumber(data.weeklyCompletedKm)],
+
+    ["editLifeCigs", data.lifetimeCigarettes],
+
+    ["editLifeKm", formatNumber(data.lifetimeCompletedKm)]
+
+  ];
+
+  fields.forEach(([id, value]) => {
+
+    const field = document.getElementById(id);
+
+    if (document.activeElement !== field) field.value = value;
+
+  });
+
+}
+
+// ======================================
+
+// SCREEN NAVIGATION
+
+// ======================================
+
+function showScreen(name) {
+
+  const screens = {
+
+    weekly: "weeklyScreen",
+
+    stats: "statsScreen",
+
+    manage: "manageScreen"
+
+  };
+
+  Object.entries(screens).forEach(([key, id]) => {
+
+    document.getElementById(id).classList.toggle("active", key === name);
+
+  });
+
+  document.getElementById("navWeekly").classList.toggle("active", name === "weekly");
+
+  document.getElementById("navStats").classList.toggle("active", name === "stats");
+
+  document.getElementById("navManage").classList.toggle("active", name === "manage");
+
+  if (name === "manage") syncManagementFields();
+
+  window.scrollTo(0, 0);
+
+}
+
+// ======================================
+
+// MESSAGES
+
+// ======================================
+
+function showMessage(message, error = false, target = "weeklyMessage") {
+
+  const element = document.getElementById(target);
+
+  element.textContent = message;
+
+  element.style.color = error ? "#ff7777" : "#36cf86";
+
 }
 
 // ======================================
@@ -826,31 +1034,31 @@ function saveSnapshot(action) {
 
   data.history.push({
 
-    action: action,
+    action,
 
-    cigarettes: data.cigarettes,
+    lifetimeCigarettes: data.lifetimeCigarettes,
 
-    completedKm: data.completedKm,
+    lifetimeCompletedKm: data.lifetimeCompletedKm,
 
-    debt: data.debt
+    weeklyCigarettes: data.weeklyCigarettes,
+
+    weeklyCompletedKm: data.weeklyCompletedKm,
+
+    weekStart: data.weekStart
 
   });
 
-  // Keep the latest 50 actions
-
-  if (data.history.length > 50) {
-
-    data.history.shift();
-
-  }
+  if (data.history.length > 50) data.history.shift();
 
 }
 
 function undoLast() {
 
+  checkWeeklyReset();
+
   if (data.history.length === 0) {
 
-    showMessage("Nothing to undo.", true);
+    showMessage("Nothing to undo.", true, "manageMessage");
 
     return;
 
@@ -860,65 +1068,57 @@ function undoLast() {
 
   const previous = data.history.pop();
 
-  data.cigarettes = previous.cigarettes;
+  data.lifetimeCigarettes = previous.lifetimeCigarettes;
 
-  data.completedKm = previous.completedKm;
+  data.lifetimeCompletedKm = previous.lifetimeCompletedKm;
 
-  data.debt = previous.debt;
+  data.weeklyCigarettes = previous.weeklyCigarettes;
 
-  saveData();
+  data.weeklyCompletedKm = previous.weeklyCompletedKm;
 
-  updateDisplay();
+  data.weekStart = previous.weekStart;
 
-  showMessage("Last action successfully undone.");
+  if (saveData()) {
+
+    updateDisplay();
+
+    showMessage("Last action undone.", false, "manageMessage");
+
+  }
 
 }
 
 // ======================================
 
-// CIGARETTE COUNTER
+// WEEKLY CIGARETTE COUNTER
 
 // ======================================
 
-function changeCigarettes(amount) {
+function changeWeeklyCigs(amount) {
 
-  if (amount < 0 && data.cigarettes <= 0) {
+  checkWeeklyReset();
 
-    showMessage("Cigarette count cannot go below zero.", true);
+  if (amount < 0 && data.weeklyCigarettes <= 0) {
+
+    showMessage("Weekly cigarette count cannot go below zero.", true);
 
     return;
 
   }
 
-  saveSnapshot(
+  saveSnapshot(amount > 0 ? "Cigarette added" : "Cigarette removed");
 
-    amount > 0 ? "Cigarette added" : "Cigarette removed"
+  data.weeklyCigarettes += amount;
 
-  );
+  data.lifetimeCigarettes += amount;
 
-  data.cigarettes += amount;
+  if (saveData()) {
 
-  data.debt = Math.max(
+    updateDisplay();
 
-    0,
+    showMessage(amount > 0 ? "1 cigarette added. +1km debt." : "1 cigarette removed.");
 
-    data.debt + amount
-
-  );
-
-  saveData();
-
-  updateDisplay();
-
-  showMessage(
-
-    amount > 0
-
-      ? "1 cigarette added. +1km debt."
-
-      : "1 cigarette removed. -1km debt."
-
-  );
+  }
 
 }
 
@@ -928,81 +1128,167 @@ function changeCigarettes(amount) {
 
 // ======================================
 
-document.getElementById("runForm")
+document.getElementById("runForm").addEventListener("submit", function(event) {
 
-  .addEventListener("submit", function(event) {
+  event.preventDefault();
 
-    event.preventDefault();
+  checkWeeklyReset();
 
-    const input = document.getElementById("runInput");
+  const input = document.getElementById("runInput");
 
-    const distance = Number(input.value);
+  const distance = Number(input.value);
 
-    if (!Number.isFinite(distance) || distance <= 0) {
+  if (!Number.isFinite(distance) || distance <= 0) {
 
-      showMessage("Please enter a valid distance.", true);
+    showMessage("Please enter a valid distance.", true);
 
-      return;
+    return;
 
-    }
+  }
 
-    if (distance > 1000) {
+  if (distance > 1000) {
 
-      showMessage("Please check your distance entry.", true);
+    showMessage("Please check your distance entry.", true);
 
-      return;
+    return;
 
-    }
+  }
 
-    saveSnapshot("Running distance submitted");
+  saveSnapshot("Running distance submitted");
 
-    data.completedKm = Number(
+  data.weeklyCompletedKm = Number((data.weeklyCompletedKm + distance).toFixed(2));
 
-      (data.completedKm + distance).toFixed(2)
+  data.lifetimeCompletedKm = Number((data.lifetimeCompletedKm + distance).toFixed(2));
 
-    );
-
-    // No excess running credit carried forward
-
-    data.debt = Math.max(
-
-      0,
-
-      Number((data.debt - distance).toFixed(2))
-
-    );
-
-    saveData();
+  if (saveData()) {
 
     updateDisplay();
 
     input.value = "";
 
-    showMessage(
+    showMessage(`${formatNumber(distance)} km recorded successfully!`);
 
-      distance + "km recorded successfully!"
+  }
 
-    );
-
-  });
+});
 
 // ======================================
 
-// MESSAGE
+// DATA MANAGEMENT: WEEKLY EDITS
 
 // ======================================
 
-function showMessage(message, error = false) {
+function readNonNegativeNumber(id, integerOnly = false) {
 
-  const element = document.getElementById("message");
+  const raw = document.getElementById(id).value.trim();
 
-  element.textContent = message;
+  if (raw === "") return null;
 
-  element.style.color = error
+  const value = Number(raw);
 
-    ? "#ff7777"
+  if (!Number.isFinite(value) || value < 0) return null;
 
-    : "#36cf86";
+  if (integerOnly && !Number.isInteger(value)) return null;
+
+  return value;
+
+}
+
+function saveWeeklyEdits() {
+
+  checkWeeklyReset();
+
+  const cigs = readNonNegativeNumber("editWeeklyCigs", true);
+
+  const km = readNonNegativeNumber("editWeeklyKm");
+
+  if (cigs === null || km === null) {
+
+    showMessage("Enter valid non-negative values. Cigarettes must be whole numbers.", true, "manageMessage");
+
+    return;
+
+  }
+
+  const cigDifference = cigs - data.weeklyCigarettes;
+
+  const kmDifference = km - data.weeklyCompletedKm;
+
+  if (data.lifetimeCigarettes + cigDifference < 0 ||
+
+      data.lifetimeCompletedKm + kmDifference < 0) {
+
+    showMessage("These changes would make a lifetime total negative.", true, "manageMessage");
+
+    return;
+
+  }
+
+  saveSnapshot("Weekly figures edited");
+
+  data.weeklyCigarettes = cigs;
+
+  data.weeklyCompletedKm = Number(km.toFixed(2));
+
+  // Keep lifetime figures aligned with changes to this week's figures.
+
+  data.lifetimeCigarettes += cigDifference;
+
+  data.lifetimeCompletedKm = Number((data.lifetimeCompletedKm + kmDifference).toFixed(2));
+
+  if (saveData()) {
+
+    updateDisplay();
+
+    showMessage("Weekly figures updated.", false, "manageMessage");
+
+  }
+
+}
+
+// ======================================
+
+// DATA MANAGEMENT: LIFETIME EDITS
+
+// ======================================
+
+function saveLifetimeEdits() {
+
+  checkWeeklyReset();
+
+  const cigs = readNonNegativeNumber("editLifeCigs", true);
+
+  const km = readNonNegativeNumber("editLifeKm");
+
+  if (cigs === null || km === null) {
+
+    showMessage("Enter valid non-negative values. Cigarettes must be whole numbers.", true, "manageMessage");
+
+    return;
+
+  }
+
+  if (cigs < data.weeklyCigarettes || km + 0.000001 < data.weeklyCompletedKm) {
+
+    showMessage("Lifetime totals cannot be lower than this week's figures.", true, "manageMessage");
+
+    return;
+
+  }
+
+  saveSnapshot("Lifetime figures edited");
+
+  data.lifetimeCigarettes = cigs;
+
+  data.lifetimeCompletedKm = Number(km.toFixed(2));
+
+  if (saveData()) {
+
+    updateDisplay();
+
+    showMessage("Lifetime figures updated.", false, "manageMessage");
+
+  }
 
 }
 
@@ -1016,23 +1302,21 @@ function exportBackup() {
 
   const backup = {
 
-    app: "Smoke to Run",
+    app: "Run to Smoke",
 
-    version: 1,
+    version: 2,
 
     exportedAt: new Date().toISOString(),
 
-    data: data
+    data
 
   };
 
-  const blob = new Blob(
+  const blob = new Blob([JSON.stringify(backup, null, 2)], {
 
-    [JSON.stringify(backup, null, 2)],
+    type: "application/json"
 
-    { type: "application/json" }
-
-  );
+  });
 
   const url = URL.createObjectURL(blob);
 
@@ -1040,13 +1324,13 @@ function exportBackup() {
 
   link.href = url;
 
-  link.download = "smoke-to-run-backup.json";
+  link.download = "run-to-smoke-backup.json";
 
   link.click();
 
-  URL.revokeObjectURL(url);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 
-  showMessage("Backup exported.");
+  showMessage("Backup exported.", false, "manageMessage");
 
 }
 
@@ -1070,27 +1354,47 @@ function restoreBackup(event) {
 
       const backup = JSON.parse(reader.result);
 
-      const restored = backup.data;
+      let restored = backup.data;
+
+      // Accept backups from the original version 1 app.
 
       if (
 
-        backup.app !== "Smoke to Run" ||
+        backup.app === "Smoke to Run" &&
 
-        !restored ||
+        restored &&
 
-        !Number.isInteger(restored.cigarettes) ||
+        Number.isInteger(restored.cigarettes) &&
 
-        restored.cigarettes < 0 ||
+        Number.isFinite(restored.completedKm)
 
-        !Number.isFinite(restored.completedKm) ||
+      ) {
 
-        restored.completedKm < 0 ||
+        restored = {
 
-        !Number.isFinite(restored.debt) ||
+          version: 2,
 
-        restored.debt < 0 ||
+          lifetimeCigarettes: restored.cigarettes,
 
-        !Array.isArray(restored.history)
+          lifetimeCompletedKm: restored.completedKm,
+
+          weeklyCigarettes: 0,
+
+          weeklyCompletedKm: 0,
+
+          weekStart: currentWeekKey(),
+
+          history: []
+
+        };
+
+      }
+
+      if (
+
+        !["Run to Smoke", "Smoke to Run"].includes(backup.app) ||
+
+        !validData(restored)
 
       ) {
 
@@ -1098,23 +1402,43 @@ function restoreBackup(event) {
 
       }
 
-      if (!confirm("Replace your current data with this backup?")) {
+      if (!confirm("Replace your current data with this backup?")) return;
 
-        return;
+      data = {
+
+        ...restored,
+
+        version: 2,
+
+        history: restored.history.slice(-50)
+
+      };
+
+      // If backup is from a previous week, reset only its weekly figures.
+
+      if (data.weekStart !== currentWeekKey()) {
+
+        data.weeklyCigarettes = 0;
+
+        data.weeklyCompletedKm = 0;
+
+        data.weekStart = currentWeekKey();
+
+        data.history = [];
 
       }
 
-      data = restored;
+      if (saveData()) {
 
-      saveData();
+        updateDisplay();
 
-      updateDisplay();
+        showMessage("Backup restored successfully.", false, "manageMessage");
 
-      showMessage("Backup restored successfully.");
+      }
 
     } catch (error) {
 
-      showMessage("Invalid backup file.", true);
+      showMessage("Invalid backup file.", true, "manageMessage");
 
     } finally {
 
@@ -1136,21 +1460,27 @@ function restoreBackup(event) {
 
 function resetData() {
 
-  const confirmation = confirm(
+  if (!confirm("WARNING: This permanently deletes all weekly and lifetime records on this device. Export a backup first if needed. Continue?")) {
 
-    "WARNING: This will permanently delete all your cigarette and running records on this device. Continue?"
+    return;
 
-  );
+  }
 
-  if (!confirmation) return;
+  const oldData = data;
 
-  data = structuredClone(defaultData);
+  data = makeDefaultData();
 
   if (saveData()) {
 
     updateDisplay();
 
-    showMessage("All data has been reset.");
+    showMessage("All data has been reset.", false, "manageMessage");
+
+  } else {
+
+    data = oldData;
+
+    updateDisplay();
 
   }
 
@@ -1158,11 +1488,27 @@ function resetData() {
 
 // ======================================
 
-// INITIALISE APP
+// INITIALISE AND AUTOMATIC WEEK CHECK
 
 // ======================================
 
+checkWeeklyReset();
+
 updateDisplay();
+
+// Check when the app is opened, resumed, or the device date changes.
+
+document.addEventListener("visibilitychange", function() {
+
+  if (!document.hidden) checkWeeklyReset();
+
+});
+
+window.addEventListener("focus", checkWeeklyReset);
+
+// Also check while the app remains open across Monday midnight.
+
+setInterval(checkWeeklyReset, 60000);
 
 </script>
 
