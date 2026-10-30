@@ -336,22 +336,44 @@ input[type="file"] { display: none; }
 
   <section class="card">
     <div class="card-title">Cigarettes Smoked This Week</div>
+
     <div class="counter-row">
       <div class="counter-value" id="weeklyCigs">0</div>
+
       <div class="counter-controls">
         <button class="counter-button secondary" onclick="changeWeeklyCigs(-1)">−</button>
         <button class="counter-button primary" onclick="changeWeeklyCigs(1)">+</button>
       </div>
     </div>
+
     <div class="helper">Every cigarette adds 1 km to your running debt.</div>
   </section>
 
   <section class="card">
     <div class="card-title">Log Your Run</div>
-    <div class="muted small">Completed running distance (km)</div>
-    <input id="runInput" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Enter distance in km">
+
+    <!-- NEW: WEEKLY RUNNING DISTANCE DISPLAY -->
+    <div class="big-number green" id="weeklyKm">0 km</div>
+    <div class="muted small">Running distance completed this week</div>
+
+    <div class="muted small" style="margin-top: 16px;">
+      Add completed running distance (km)
+    </div>
+
+    <input
+      id="runInput"
+      type="number"
+      min="0.01"
+      step="0.01"
+      inputmode="decimal"
+      placeholder="Enter distance in km"
+    >
+
     <button class="primary full-button" onclick="logRun()">Submit Run</button>
-    <div class="helper">Only completed distance counts. Extra running does not create credit for future weeks.</div>
+
+    <div class="helper">
+      Only completed distance counts. Extra running does not create credit for future weeks.
+    </div>
   </section>
 
   <section class="card">
@@ -359,6 +381,11 @@ input[type="file"] { display: none; }
     <div class="big-number red" id="weeklyLifetimeDebt">0 km</div>
     <div class="muted small">Your overall outstanding running distance</div>
   </section>
+
+  <div class="muted small" style="text-align:center; line-height:1.6; margin: 38px 8px 10px;">
+    Weekly figures reset automatically every Monday at midnight.<br>
+    Lifetime totals are retained.
+  </div>
 
 </main>
 
@@ -401,7 +428,10 @@ input[type="file"] { display: none; }
     <input id="editWeeklyKm" type="number" min="0" step="0.01" inputmode="decimal">
 
     <button class="primary full-button" onclick="saveWeeklyEdits()">Save Weekly Records</button>
-    <div class="helper">Changes made here will also adjust your lifetime totals by the same amount.</div>
+
+    <div class="helper">
+      Changes made here will also adjust your lifetime totals by the same amount.
+    </div>
   </section>
 
   <section class="card">
@@ -414,7 +444,10 @@ input[type="file"] { display: none; }
     <input id="editLifetimeKm" type="number" min="0" step="0.01" inputmode="decimal">
 
     <button class="primary full-button" onclick="saveLifetimeEdits()">Save Lifetime Records</button>
-    <div class="helper">Lifetime totals cannot be lower than the current week's records.</div>
+
+    <div class="helper">
+      Lifetime totals cannot be lower than the current week's records.
+    </div>
   </section>
 
   <section class="card">
@@ -425,10 +458,15 @@ input[type="file"] { display: none; }
 
   <section class="card">
     <div class="card-title">Backup & Restore</div>
+
     <button class="secondary full-button" onclick="exportBackup()">Export Backup</button>
+
     <label class="file-label" for="restoreFile">Restore From Backup</label>
     <input id="restoreFile" type="file" accept=".json,application/json" onchange="restoreBackup(event)">
-    <div class="helper">Export a backup regularly to keep a copy of your records. Backup files contain your app data.</div>
+
+    <div class="helper">
+      Export a backup regularly to keep a copy of your records. Backup files contain your app data.
+    </div>
   </section>
 
   <section class="card">
@@ -594,6 +632,10 @@ function render() {
 
   document.getElementById("weeklyCigs").textContent =
     appData.weeklyCigs;
+
+  // NEW: Update weekly completed running distance display.
+  document.getElementById("weeklyKm").textContent =
+    formatKm(appData.weeklyKm);
 
   document.getElementById("weeklyLifetimeDebt").textContent =
     formatKm(lifetimeDebt());
@@ -853,12 +895,9 @@ function showScreen(screenName) {
 
   document.getElementById(navButtons[screenName]).classList.add("active");
 
-  // Return to the top when changing screens.
   window.scrollTo({ top: 0, behavior: "instant" });
 
-  // Show the header at the top of the newly selected screen.
   showHeader();
-
   render();
 
   requestAnimationFrame(() => {
@@ -894,21 +933,6 @@ function hideHeader() {
   appHeader.classList.add("header-hidden");
 }
 
-/*
-  The first card's top border controls the header.
-
-  Hide the header when the first card's top border reaches
-  the header's bottom boundary.
-
-  Keep it hidden while the border is above that boundary.
-
-  Show it again only when the first card's top border has
-  moved below the boundary and is visible again.
-
-  The header's original sticky position is used for the
-  calculation, not its transformed position when hidden.
-*/
-
 function updateHeaderVisibility() {
   const activeScreen = document.querySelector(".screen.active");
   if (!activeScreen) return;
@@ -923,8 +947,8 @@ function updateHeaderVisibility() {
 
   const headerHeight = appHeader.offsetHeight;
 
-  // Small margin ensures the card border is visibly clear
-  // of the header before the header is allowed to reappear.
+  // Header reappears only after the first card's top border
+  // is fully below the header's original bottom edge.
   const visibilityBoundary = headerTop + headerHeight + 2;
 
   if (firstCardTop > visibilityBoundary) {
@@ -947,7 +971,6 @@ window.addEventListener("scroll", () => {
 
 window.addEventListener("resize", updateHeaderVisibility);
 
-// Check weekly reset when the app is opened or resumed.
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     checkWeeklyReset();
