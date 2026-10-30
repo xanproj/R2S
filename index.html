@@ -34,13 +34,11 @@
 
   --border: #30333b;
 
-}
-
-* {
-
-  box-sizing: border-box;
+  --safe-area-top: env(safe-area-inset-top);
 
 }
+
+* { box-sizing: border-box; }
 
 html {
 
@@ -68,7 +66,7 @@ header {
 
   position: sticky;
 
-  top: calc(env(safe-area-inset-top) + 4px);
+  top: calc(var(--safe-area-top) + 4px);
 
   z-index: 50;
 
@@ -132,17 +130,9 @@ header h1 {
 
 }
 
-.screen {
+.screen { display: none; }
 
-  display: none;
-
-}
-
-.screen.active {
-
-  display: block;
-
-}
+.screen.active { display: block; }
 
 .card {
 
@@ -190,29 +180,13 @@ header h1 {
 
 }
 
-.red {
+.red { color: var(--red); }
 
-  color: var(--red);
+.green { color: var(--green); }
 
-}
+.muted { color: var(--muted); }
 
-.green {
-
-  color: var(--green);
-
-}
-
-.muted {
-
-  color: var(--muted);
-
-}
-
-.small {
-
-  font-size: 13px;
-
-}
+.small { font-size: 13px; }
 
 .debt-card {
 
@@ -222,11 +196,7 @@ header h1 {
 
 }
 
-.debt-card .big-number {
-
-  font-size: 54px;
-
-}
+.debt-card .big-number { font-size: 54px; }
 
 .stat-row {
 
@@ -324,11 +294,7 @@ button {
 
 }
 
-button:active {
-
-  transform: scale(0.97);
-
-}
+button:active { transform: scale(0.97); }
 
 button.primary {
 
@@ -388,11 +354,7 @@ input {
 
 }
 
-input:focus {
-
-  border-color: var(--green);
-
-}
+input:focus { border-color: var(--green); }
 
 .full-button {
 
@@ -424,17 +386,9 @@ input:focus {
 
 }
 
-.status.debt {
+.status.debt { color: var(--red); }
 
-  color: var(--red);
-
-}
-
-.status.clear {
-
-  color: var(--green);
-
-}
+.status.clear { color: var(--green); }
 
 .section-heading {
 
@@ -506,11 +460,7 @@ input:focus {
 
 }
 
-.hidden {
-
-  display: none !important;
-
-}
+.hidden { display: none !important; }
 
 .toast {
 
@@ -546,11 +496,7 @@ input:focus {
 
 }
 
-.toast.show {
-
-  opacity: 1;
-
-}
+.toast.show { opacity: 1; }
 
 .file-label {
 
@@ -578,31 +524,15 @@ input:focus {
 
 }
 
-input[type="file"] {
-
-  display: none;
-
-}
+input[type="file"] { display: none; }
 
 @media (max-width: 380px) {
 
-  .big-number {
+  .big-number { font-size: 36px; }
 
-    font-size: 36px;
+  .debt-card .big-number { font-size: 48px; }
 
-  }
-
-  .debt-card .big-number {
-
-    font-size: 48px;
-
-  }
-
-  .card {
-
-    padding: 17px;
-
-  }
+  .card { padding: 17px; }
 
 }
 
@@ -744,11 +674,7 @@ input[type="file"] {
 
     <button class="primary full-button" onclick="saveWeeklyEdits()">Save Weekly Records</button>
 
-    <div class="helper">
-
-      Changes made here will also adjust your lifetime totals by the same amount.
-
-    </div>
+    <div class="helper">Changes made here will also adjust your lifetime totals by the same amount.</div>
 
   </section>
 
@@ -766,11 +692,7 @@ input[type="file"] {
 
     <button class="primary full-button" onclick="saveLifetimeEdits()">Save Lifetime Records</button>
 
-    <div class="helper">
-
-      Lifetime totals cannot be lower than the current week's records.
-
-    </div>
+    <div class="helper">Lifetime totals cannot be lower than the current week's records.</div>
 
   </section>
 
@@ -794,11 +716,7 @@ input[type="file"] {
 
     <input id="restoreFile" type="file" accept=".json,application/json" onchange="restoreBackup(event)">
 
-    <div class="helper">
-
-      Export a backup regularly to keep a copy of your records. Backup files contain your app data.
-
-    </div>
+    <div class="helper">Export a backup regularly to keep a copy of your records. Backup files contain your app data.</div>
 
   </section>
 
@@ -924,8 +842,6 @@ function normaliseData(raw) {
 
   } else {
 
-    // V1 migration: preserve cumulative totals.
-
     data.lifetimeCigs = Math.max(0, Number(raw.cigarettes) || 0);
 
     data.lifetimeKm = Math.max(0, Number(raw.completedKm) || 0);
@@ -942,19 +858,11 @@ function loadData() {
 
     const stored = localStorage.getItem(STORAGE_KEY);
 
-    if (stored) {
-
-      return normaliseData(JSON.parse(stored));
-
-    }
+    if (stored) return normaliseData(JSON.parse(stored));
 
     const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
 
-    if (legacy) {
-
-      return normaliseData(JSON.parse(legacy));
-
-    }
+    if (legacy) return normaliseData(JSON.parse(legacy));
 
   } catch (error) {
 
@@ -1048,29 +956,17 @@ function render() {
 
   checkWeeklyReset();
 
-  document.getElementById("weeklyDebt").textContent =
+  document.getElementById("weeklyDebt").textContent = formatKm(weeklyDebt());
 
-    formatKm(weeklyDebt());
+  document.getElementById("weeklyCigs").textContent = appData.weeklyCigs;
 
-  document.getElementById("weeklyCigs").textContent =
+  document.getElementById("weeklyLifetimeDebt").textContent = formatKm(lifetimeDebt());
 
-    appData.weeklyCigs;
+  document.getElementById("lifetimeCigs").textContent = appData.lifetimeCigs;
 
-  document.getElementById("weeklyLifetimeDebt").textContent =
+  document.getElementById("lifetimeKm").textContent = formatKm(appData.lifetimeKm);
 
-    formatKm(lifetimeDebt());
-
-  document.getElementById("lifetimeCigs").textContent =
-
-    appData.lifetimeCigs;
-
-  document.getElementById("lifetimeKm").textContent =
-
-    formatKm(appData.lifetimeKm);
-
-  document.getElementById("lifetimeDebt").textContent =
-
-    formatKm(lifetimeDebt());
+  document.getElementById("lifetimeDebt").textContent = formatKm(lifetimeDebt());
 
   const status = document.getElementById("lifetimeStatus");
 
@@ -1088,21 +984,13 @@ function render() {
 
   }
 
-  document.getElementById("editWeeklyCigs").value =
+  document.getElementById("editWeeklyCigs").value = appData.weeklyCigs;
 
-    appData.weeklyCigs;
+  document.getElementById("editWeeklyKm").value = appData.weeklyKm;
 
-  document.getElementById("editWeeklyKm").value =
+  document.getElementById("editLifetimeCigs").value = appData.lifetimeCigs;
 
-    appData.weeklyKm;
-
-  document.getElementById("editLifetimeCigs").value =
-
-    appData.lifetimeCigs;
-
-  document.getElementById("editLifetimeKm").value =
-
-    appData.lifetimeKm;
+  document.getElementById("editLifetimeKm").value = appData.lifetimeKm;
 
 }
 
@@ -1196,9 +1084,13 @@ function saveWeeklyEdits() {
 
   const kmDifference = newKm - appData.weeklyKm;
 
-  if (appData.lifetimeCigs + cigDifference < 0 ||
+  if (
 
-      appData.lifetimeKm + kmDifference < 0) {
+    appData.lifetimeCigs + cigDifference < 0 ||
+
+    appData.lifetimeKm + kmDifference < 0
+
+  ) {
 
     showToast("Weekly changes cannot make lifetime totals negative");
 
@@ -1426,11 +1318,21 @@ function showScreen(screenName) {
 
   document.getElementById(navButtons[screenName]).classList.add("active");
 
-  window.scrollTo(0, 0);
+  // Return to the top immediately when changing screens.
+
+  window.scrollTo({ top: 0, behavior: "instant" });
+
+  // Reset the header state before measuring the new screen.
+
+  showHeader();
 
   render();
 
-  requestAnimationFrame(updateHeaderVisibility);
+  requestAnimationFrame(() => {
+
+    updateHeaderVisibility();
+
+  });
 
 }
 
@@ -1452,13 +1354,11 @@ function showToast(message) {
 
 }
 
-// HEADER VISIBILITY
+/* --------------------------------
 
-// Hide when the top edge of the first card crosses the
+   HEADER VISIBILITY
 
-// bottom edge of the sticky header. Show again only when
-
-// scrolling back up makes that top edge visible below it.
+   -------------------------------- */
 
 const appHeader = document.getElementById("appHeader");
 
@@ -1476,6 +1376,40 @@ function hideHeader() {
 
 }
 
+/*
+
+  The trigger is the first card's TOP BORDER.
+
+  The header is hidden when that border reaches or passes
+
+  the header's bottom edge.
+
+  It stays hidden while the border is above that boundary.
+
+  It reappears only when the border moves back below the
+
+  boundary and is visible again.
+
+  The calculation uses the CSS safe-area value so the
+
+  trigger is positioned correctly on iPhones.
+
+*/
+
+function getHeaderBottomBoundary() {
+
+  const rootStyles = getComputedStyle(document.documentElement);
+
+  const safeAreaTop =
+
+    parseFloat(rootStyles.getPropertyValue("--safe-area-top")) || 0;
+
+  const stickyTop = safeAreaTop + 4;
+
+  return stickyTop + appHeader.offsetHeight;
+
+}
+
 function updateHeaderVisibility() {
 
   const activeScreen = document.querySelector(".screen.active");
@@ -1486,15 +1420,13 @@ function updateHeaderVisibility() {
 
   if (!firstCard) return;
 
-  const headerHeight = appHeader.offsetHeight;
-
-  const stickyTop = parseFloat(getComputedStyle(appHeader).top) || 0;
-
   const firstCardTop = firstCard.getBoundingClientRect().top;
 
-  const headerBottomPosition = stickyTop + headerHeight;
+  const boundary = getHeaderBottomBoundary();
 
-  if (firstCardTop <= headerBottomPosition) {
+  // Only the first card's top border controls visibility.
+
+  if (firstCardTop <= boundary) {
 
     hideHeader();
 
@@ -1558,7 +1490,11 @@ saveData();
 
 render();
 
-requestAnimationFrame(updateHeaderVisibility);
+requestAnimationFrame(() => {
+
+  updateHeaderVisibility();
+
+});
 
 </script>
 
