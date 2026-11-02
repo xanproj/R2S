@@ -92,8 +92,6 @@ input:focus {border-color:var(--green)}
 .status {margin-top:12px;font-size:14px;font-weight:700}
 .status.debt {color:var(--red)}
 .status.clear {color:var(--green)}
-
-/* Weekly running distance display */
 .weekly-distance-row {
   display:flex;justify-content:space-between;align-items:center;
   gap:12px;padding:14px;margin:4px 0 14px;
@@ -105,7 +103,6 @@ input:focus {border-color:var(--green)}
   color:var(--green);font-size:22px;font-weight:800;
   font-variant-numeric:tabular-nums;white-space:nowrap;
 }
-
 .nav {
   position:fixed;z-index:100;bottom:0;left:0;right:0;
   padding:10px 12px calc(10px + env(safe-area-inset-bottom));
@@ -153,9 +150,7 @@ input[type="file"] {display:none}
   </div>
 </header>
 
-<!-- WEEKLY TRACKER -->
 <main id="weeklyScreen" class="screen active">
-
   <section class="card debt-card">
     <div class="card-title">Weekly Run Debt</div>
     <div class="big-number red" id="weeklyDebt">0 km</div>
@@ -176,13 +171,10 @@ input[type="file"] {display:none}
 
   <section class="card">
     <div class="card-title">Log Your Run</div>
-
-    <!-- Weekly running distance is displayed here -->
     <div class="weekly-distance-row">
       <div class="weekly-distance-label">Weekly Running Distance</div>
       <div class="weekly-distance-value" id="weeklyRunDistance">0 km</div>
     </div>
-
     <div class="muted small">Completed running distance (km)</div>
     <input id="runInput" type="number" min="0.01" step="0.01"
       inputmode="decimal" placeholder="Enter distance in km">
@@ -197,10 +189,8 @@ input[type="file"] {display:none}
     <div class="big-number red" id="weeklyLifetimeDebt">0 km</div>
     <div class="muted small">Your overall outstanding running distance</div>
   </section>
-
 </main>
 
-<!-- LIFETIME STATISTICS: ONE CARD ONLY -->
 <main id="lifetimeScreen" class="screen">
   <section class="card">
     <div class="card-title">Lifetime Statistics</div>
@@ -220,9 +210,7 @@ input[type="file"] {display:none}
   </section>
 </main>
 
-<!-- DATA MANAGEMENT -->
 <main id="managementScreen" class="screen">
-
   <section class="card">
     <div class="card-title">Edit This Week's Records</div>
     <label class="small muted" for="editWeeklyCigs">Weekly cigarettes smoked</label>
@@ -262,7 +250,6 @@ input[type="file"] {display:none}
     <div class="muted small">Permanently clear all weekly and lifetime records.</div>
     <button class="danger full-button" onclick="resetAllData()">Reset All Data</button>
   </section>
-
 </main>
 
 <nav class="nav">
@@ -378,17 +365,22 @@ function checkWeeklyReset() {
   }
 }
 
+/* All cigarette-to-running calculations use this conversion. */
+function cigaretteDebt(cigarettes) {
+  return cigarettes * KM_PER_CIGARETTE;
+}
+
 function weeklyDebt() {
   return Math.max(
     0,
-    appData.weeklyCigs * KM_PER_CIGARETTE - appData.weeklyKm
+    cigaretteDebt(appData.weeklyCigs) - appData.weeklyKm
   );
 }
 
 function lifetimeDebt() {
   return Math.max(
     0,
-    appData.lifetimeCigs * KM_PER_CIGARETTE - appData.lifetimeKm
+    cigaretteDebt(appData.lifetimeCigs) - appData.lifetimeKm
   );
 }
 
@@ -401,11 +393,7 @@ function render() {
 
   document.getElementById("weeklyDebt").textContent = formatKm(weeklyDebt());
   document.getElementById("weeklyCigs").textContent = appData.weeklyCigs;
-
-  // Update the dedicated weekly distance row.
-  document.getElementById("weeklyRunDistance").textContent =
-    formatKm(appData.weeklyKm);
-
+  document.getElementById("weeklyRunDistance").textContent = formatKm(appData.weeklyKm);
   document.getElementById("weeklyLifetimeDebt").textContent = formatKm(lifetimeDebt());
   document.getElementById("lifetimeCigs").textContent = appData.lifetimeCigs;
   document.getElementById("lifetimeKm").textContent = formatKm(appData.lifetimeKm);
@@ -428,14 +416,19 @@ function render() {
 
 function changeWeeklyCigs(amount) {
   checkWeeklyReset();
-  const newValue = appData.weeklyCigs+amount;
-  if (newValue<0) {
+
+  const newValue = appData.weeklyCigs + amount;
+  if (newValue < 0) {
     showToast("Cigarette count cannot go below zero");
     return;
   }
+
   recordUndo();
+
+  // Update cigarette counts. Debt is recalculated from the 0.6 km conversion.
   appData.weeklyCigs = newValue;
   appData.lifetimeCigs += amount;
+
   saveData();
   render();
 }
