@@ -171,7 +171,7 @@ input[type="file"] {display:none}
         <button class="counter-button primary" onclick="changeWeeklyCigs(1)">+</button>
       </div>
     </div>
-    <div class="helper">Every cigarette adds 1 km to your running debt.</div>
+    <div class="helper">Every cigarette adds 600 metres (0.6 km) to your running debt.</div>
   </section>
 
   <section class="card">
@@ -282,6 +282,7 @@ input[type="file"] {display:none}
 <script>
 const STORAGE_KEY = "smokeToRunData";
 const LEGACY_STORAGE_KEY = "smokeToRunData";
+const KM_PER_CIGARETTE = 0.6;
 let undoSnapshot = null;
 
 function getMondayKey(date = new Date()) {
@@ -378,11 +379,17 @@ function checkWeeklyReset() {
 }
 
 function weeklyDebt() {
-  return Math.max(0,appData.weeklyCigs-appData.weeklyKm);
+  return Math.max(
+    0,
+    appData.weeklyCigs * KM_PER_CIGARETTE - appData.weeklyKm
+  );
 }
 
 function lifetimeDebt() {
-  return Math.max(0,appData.lifetimeCigs-appData.lifetimeKm);
+  return Math.max(
+    0,
+    appData.lifetimeCigs * KM_PER_CIGARETTE - appData.lifetimeKm
+  );
 }
 
 function formatKm(value) {
